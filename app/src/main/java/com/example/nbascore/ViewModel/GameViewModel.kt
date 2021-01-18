@@ -12,11 +12,11 @@ import kotlinx.coroutines.launch
 
 class GameViewModel(application: Application) : AndroidViewModel(application) {
     private var _allGames: GameData? = null
-    val allGames: GameData?
+    var allGames: GameData? = null
     get()= _allGames
 
     private var _gamesByDate: GameData? = null
-    val gamesByDate: GameData?
+    var gamesByDate: GameData? = null
         get()= _gamesByDate
 
     fun getAllGames()

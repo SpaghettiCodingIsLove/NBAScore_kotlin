@@ -6,12 +6,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.example.nbascore.Model.DataSource
+import com.example.nbascore.Model.Day
 import com.example.nbascore.R
+import com.example.nbascore.ViewModel.CalendarAdapter
 import com.example.nbascore.ViewModel.GameViewModel
-import com.example.nbascore.ViewModel.PlayerViewModel
+import com.example.nbascore.ViewModel.GamesAdapter
 import kotlinx.android.synthetic.main.fragment_games.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.contracts.contract
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,24 +39,129 @@ class FragmentGames : Fragment() {
 
     private lateinit var viewModel: GameViewModel
 
+    private lateinit var calendarDays: ArrayList<Day>
+    private lateinit var myAdapter: CalendarAdapter
+    private lateinit var myLayoutManager: LinearLayoutManager
+    private lateinit var recyclerView: RecyclerView
+
+    private lateinit var myAdapter2: GamesAdapter
+    private lateinit var myLayoutManager2: LinearLayoutManager
+    private lateinit var recyclerView2: RecyclerView
+
+    var cal = Calendar.getInstance()
+    private val currentDate = Calendar.getInstance()
+    private val currentDay = currentDate[Calendar.DAY_OF_MONTH]
+    private val currentMonth = currentDate[Calendar.MONTH]
+    private val currentYear = currentDate[Calendar.YEAR]
+    private val sdf = SimpleDateFormat("MMMM yyyy")
+
+    private var selectedDay: Int = currentDay
+
+    private val dates = ArrayList<Date>()
+
+    private fun getDaysInMonth(): ArrayList<Day>{
+        val monthCalendar = cal.clone() as Calendar
+        val maxDaysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
+
+        var currentPosition = 0
+        dates.clear()
+        monthCalendar.set(Calendar.DAY_OF_MONTH, 1)
+
+        while(dates.size < maxDaysInMonth){
+            if(monthCalendar[Calendar.DAY_OF_MONTH] == selectedDay)
+                currentPosition = dates.size
+            dates.add(monthCalendar.time)
+            monthCalendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+
+        var dni: ArrayList<Day> = arrayListOf()
+
+        Log.d("TEST", dates.size.toString())
+        for (item in dates)
+        {
+            var kalendarz = Calendar.getInstance()
+            kalendarz.time = item
+            var isEnabled: Boolean = false
+            //Log.d("TEST", "Current: "+ currentMonth + " " + currentDay + " " + currentYear)
+            //Log.d("TEST", "Kalendarz: " + kalendarz[Calendar.MONTH] + " " + kalendarz[Calendar.DAY_OF_MONTH] + " " + kalendarz[Calendar.YEAR])
+            if(kalendarz[Calendar.MONTH] == DataSource.selectedMonth && kalendarz[Calendar.DAY_OF_MONTH] == DataSource.selectedDay && kalendarz[Calendar.YEAR] == DataSource.selectedYear)
+                isEnabled = true
+            //var napis: String = sdf.format(kalendarz.time) + " " + kalendarz[Calendar.MONTH].toString() + " " + kalendarz[Calendar.DAY_OF_WEEK] + " " + kalendarz[Calendar.DAY_OF_MONTH].toString() + " " + kalendarz[Calendar.YEAR].toString()
+            //Log.d("TEST", kalendarz[Calendar.DAY_OF_MONTH].toString() + " "+  kalendarz[Calendar.MONTH].toString() + " "+  kalendarz[Calendar.YEAR].toString() + " "+  kalendarz[Calendar.DAY_OF_WEEK] + " " + isEnabled)
+
+            dni.add(Day(kalendarz[Calendar.DAY_OF_MONTH], kalendarz[Calendar.MONTH], kalendarz[Calendar.YEAR], kalendarz[Calendar.DAY_OF_WEEK], isEnabled))
+        }
+
+        return dni
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        val snapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(calendarRecyclerView)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        viewModel= ViewModelProvider(requireActivity()).get(GameViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(GameViewModel::class.java)
+
+        DataSource.selectedDay = currentDay
+        DataSource.selectedMonth = currentMonth
+        DataSource.selectedYear = currentYear
+
+        viewModel.getGamesByDate(DataSource.createDate(), DataSource.createDate())
+
+        calendarDays = getDaysInMonth()
+
+        myLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        myAdapter = CalendarAdapter(calendarDays)
+
+        myLayoutManager2 = LinearLayoutManager(context)
+        myAdapter2 = GamesAdapter(viewModel.gamesByDate?.data)
 
         return inflater.inflate(R.layout.fragment_games, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        recyclerView = calendarRecyclerView.apply {
+            this.layoutManager = myLayoutManager
+            this.adapter = myAdapter
+        }
+
+        recyclerView2 = gamesRecyclerView.apply {
+            this.layoutManager = myLayoutManager2
+            this.adapter = myAdapter2
+        }
+
+        myAdapter2.notifyDataSetChanged()
+
+        Log.d("TEST", viewModel.gamesByDate?.data?.size.toString()?: "0")
+
+        calendar_prev_button.setOnClickListener {
+
+            cal.add(Calendar.MONTH, -1)
+            calendarDays = getDaysInMonth()
+            calendar_CurrentMonth.text = sdf.format(cal.time)
+            myAdapter.days = calendarDays
+            myAdapter.notifyDataSetChanged()
+        }
+
+        calendar_next_button.setOnClickListener {
+            cal.add(Calendar.MONTH, 1)
+            calendarDays = getDaysInMonth()
+            calendar_CurrentMonth.text = sdf.format(cal.time)
+            myAdapter.days = calendarDays
+            myAdapter.notifyDataSetChanged()
+        }
+        calendar_CurrentMonth.text = sdf.format(cal.time)
     }
 
     companion object {
