@@ -13,11 +13,13 @@ import kotlinx.coroutines.launch
 class GameViewModel(application: Application) : AndroidViewModel(application) {
     private var _allGames: GameData? = null
     var allGames: GameData? = null
-    get()= _allGames
+        get()= _allGames
+
 
     private var _gamesByDate: GameData? = null
     var gamesByDate: GameData? = null
         get()= _gamesByDate
+
 
     fun getAllGames()
     {

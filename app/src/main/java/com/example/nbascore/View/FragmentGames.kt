@@ -57,19 +57,15 @@ class FragmentGames : Fragment() {
 
     private var selectedDay: Int = currentDay
 
-    private val dates = ArrayList<Date>()
-
     private fun getDaysInMonth(): ArrayList<Day>{
         val monthCalendar = cal.clone() as Calendar
         val maxDaysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
+        val dates = ArrayList<Date>()
 
-        var currentPosition = 0
         dates.clear()
         monthCalendar.set(Calendar.DAY_OF_MONTH, 1)
 
         while(dates.size < maxDaysInMonth){
-            if(monthCalendar[Calendar.DAY_OF_MONTH] == selectedDay)
-                currentPosition = dates.size
             dates.add(monthCalendar.time)
             monthCalendar.add(Calendar.DAY_OF_MONTH, 1)
         }
@@ -82,12 +78,8 @@ class FragmentGames : Fragment() {
             var kalendarz = Calendar.getInstance()
             kalendarz.time = item
             var isEnabled: Boolean = false
-            //Log.d("TEST", "Current: "+ currentMonth + " " + currentDay + " " + currentYear)
-            //Log.d("TEST", "Kalendarz: " + kalendarz[Calendar.MONTH] + " " + kalendarz[Calendar.DAY_OF_MONTH] + " " + kalendarz[Calendar.YEAR])
             if(kalendarz[Calendar.MONTH] == DataSource.selectedMonth && kalendarz[Calendar.DAY_OF_MONTH] == DataSource.selectedDay && kalendarz[Calendar.YEAR] == DataSource.selectedYear)
                 isEnabled = true
-            //var napis: String = sdf.format(kalendarz.time) + " " + kalendarz[Calendar.MONTH].toString() + " " + kalendarz[Calendar.DAY_OF_WEEK] + " " + kalendarz[Calendar.DAY_OF_MONTH].toString() + " " + kalendarz[Calendar.YEAR].toString()
-            //Log.d("TEST", kalendarz[Calendar.DAY_OF_MONTH].toString() + " "+  kalendarz[Calendar.MONTH].toString() + " "+  kalendarz[Calendar.YEAR].toString() + " "+  kalendarz[Calendar.DAY_OF_WEEK] + " " + isEnabled)
 
             dni.add(Day(kalendarz[Calendar.DAY_OF_MONTH], kalendarz[Calendar.MONTH], kalendarz[Calendar.YEAR], kalendarz[Calendar.DAY_OF_WEEK], isEnabled))
         }
@@ -139,11 +131,9 @@ class FragmentGames : Fragment() {
         recyclerView2 = gamesRecyclerView.apply {
             this.layoutManager = myLayoutManager2
             this.adapter = myAdapter2
+            viewModel.getGamesByDate(DataSource.createDate(), DataSource.createDate())
+            myAdapter2.notifyDataSetChanged()
         }
-
-        myAdapter2.notifyDataSetChanged()
-
-        Log.d("TEST", viewModel.gamesByDate?.data?.size.toString()?: "0")
 
         calendar_prev_button.setOnClickListener {
 
@@ -162,6 +152,12 @@ class FragmentGames : Fragment() {
             myAdapter.notifyDataSetChanged()
         }
         calendar_CurrentMonth.text = sdf.format(cal.time)
+
+        szukajBtn.setOnClickListener {
+            viewModel.getGamesByDate(DataSource.createDate(), DataSource.createDate())
+            myAdapter2.games = viewModel.gamesByDate?.data
+            myAdapter2.notifyDataSetChanged()
+        }
     }
 
     companion object {
