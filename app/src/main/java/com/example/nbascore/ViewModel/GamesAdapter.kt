@@ -1,10 +1,14 @@
 package com.example.nbascore.ViewModel
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nbascore.Model.DataSource
 import com.example.nbascore.Model.Day
@@ -28,11 +32,11 @@ class GamesAdapter(var games: ArrayList<Game>?): RecyclerView.Adapter<GamesAdapt
         var visitorTeamScore = holder.itemView.findViewById<TextView>(R.id.VisitorTeamScore)
         var visitorTeam = holder.itemView.findViewById<TextView>(R.id.VisitorTeam)
 
-        homeTeam.text = games?.get(position)?.home_team?.abbrevation?: ""
-        visitorTeam.text = games?.get(position)?.visitor_team?.abbrevation?: ""
-        gameTime.text = games?.get(position)?.status?:""
-        homeTeamScore.text = games?.get(position)?.home_team_score.toString()?: ""
-        visitorTeamScore.text = games?.get(position)?.visitor_team_score.toString()?: ""
+        homeTeam.text = games?.get(position)?.home_team?.abbreviation
+        visitorTeam.text = games?.get(position)?.visitor_team?.abbreviation
+        gameTime.text = games?.get(position)?.status
+        homeTeamScore.text = games?.get(position)?.home_team_score.toString()
+        visitorTeamScore.text = games?.get(position)?.visitor_team_score.toString()
 
         if(games?.get(position)?.status == "FINAL")
         {
@@ -41,6 +45,11 @@ class GamesAdapter(var games: ArrayList<Game>?): RecyclerView.Adapter<GamesAdapt
         else
         {
             gameQuart.text = games?.get(position)?.period.toString() + "Q " + games?.get(position)?.time
+        }
+
+        holder.itemView.setOnClickListener {
+            view -> view.findNavController().navigate(R.id.action_fragmentGames_to_fragmentGameStats)
+            DataSource.selectedGame = games?.get(position)
         }
     }
 
