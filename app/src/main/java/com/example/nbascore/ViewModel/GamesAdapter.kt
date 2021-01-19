@@ -15,7 +15,7 @@ import com.example.nbascore.Model.Day
 import com.example.nbascore.Model.Entities.Game
 import com.example.nbascore.R
 
-class GamesAdapter(var games: ArrayList<Game>?): RecyclerView.Adapter<GamesAdapter.GamesHolder>()  {
+class GamesAdapter(var games: LiveData<ArrayList<Game>>): RecyclerView.Adapter<GamesAdapter.GamesHolder>()  {
     inner class GamesHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GamesHolder {
@@ -32,28 +32,31 @@ class GamesAdapter(var games: ArrayList<Game>?): RecyclerView.Adapter<GamesAdapt
         var visitorTeamScore = holder.itemView.findViewById<TextView>(R.id.VisitorTeamScore)
         var visitorTeam = holder.itemView.findViewById<TextView>(R.id.VisitorTeam)
 
-        homeTeam.text = games?.get(position)?.home_team?.abbreviation
-        visitorTeam.text = games?.get(position)?.visitor_team?.abbreviation
-        gameTime.text = games?.get(position)?.status
-        homeTeamScore.text = games?.get(position)?.home_team_score.toString()
-        visitorTeamScore.text = games?.get(position)?.visitor_team_score.toString()
+        homeTeam.text = games.value?.get(position)?.home_team?.abbreviation
+        visitorTeam.text = games.value?.get(position)?.visitor_team?.abbreviation
+        gameTime.text = games.value?.get(position)?.status
+        homeTeamScore.text = games.value?.get(position)?.home_team_score.toString()
+        visitorTeamScore.text = games.value?.get(position)?.visitor_team_score.toString()
 
-        if(games?.get(position)?.status == "FINAL")
+        if(games.value?.get(position)?.status == "Final")
         {
             gameQuart.text = "4Q 00:00"
         }
         else
         {
-            gameQuart.text = games?.get(position)?.period.toString() + "Q " + games?.get(position)?.time
+            if(games.value?.get(position)?.time == "")
+                gameQuart.text = "0Q 12:00"
+            else
+                gameQuart.text = games.value?.get(position)?.time
         }
 
         holder.itemView.setOnClickListener {
             view -> view.findNavController().navigate(R.id.action_fragmentGames_to_fragmentGameStats)
-            DataSource.selectedGame = games?.get(position)
+            DataSource.selectedGame = games.value?.get(position)
         }
     }
 
     override fun getItemCount(): Int {
-        return games?.size?: 0
+        return games.value?.size ?: 0
     }
 }

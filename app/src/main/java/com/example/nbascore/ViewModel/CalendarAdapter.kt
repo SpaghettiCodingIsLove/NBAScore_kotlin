@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CalendarAdapter(var days: ArrayList<Day>): RecyclerView.Adapter<CalendarAdapter.CalendarHolder>()  {
+class CalendarAdapter(var days: ArrayList<Day>, var viewModel: GameViewModel): RecyclerView.Adapter<CalendarAdapter.CalendarHolder>()  {
     inner class CalendarHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarHolder {
@@ -59,8 +59,8 @@ class CalendarAdapter(var days: ArrayList<Day>): RecyclerView.Adapter<CalendarAd
 
         if(days[position].isEnabled)
         {
-            dayOfWeek.setBackgroundColor(Color.GRAY)
-            day.setBackgroundColor(Color.GRAY)
+            dayOfWeek.setBackgroundColor(Color.parseColor("#8FB399"))
+            day.setBackgroundColor(Color.parseColor("#8FB399"))
         }
         else
         {
@@ -85,8 +85,9 @@ class CalendarAdapter(var days: ArrayList<Day>): RecyclerView.Adapter<CalendarAd
             DataSource.selectedDay = days[position].day
             DataSource.selectedMonth = days[position].month
             DataSource.selectedYear = days[position].year
-            dayOfWeek.setBackgroundColor(Color.GRAY)
-            day.setBackgroundColor(Color.GRAY)
+            dayOfWeek.setBackgroundColor(Color.parseColor("#8FB399"))
+            day.setBackgroundColor(Color.parseColor("#8FB399"))
+            viewModel.getGamesByDate(DataSource.createDate(), DataSource.createDate())
         }
     }
 

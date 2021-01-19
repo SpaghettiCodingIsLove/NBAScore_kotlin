@@ -55,8 +55,6 @@ class FragmentGames : Fragment() {
     private val currentYear = currentDate[Calendar.YEAR]
     private val sdf = SimpleDateFormat("MMMM yyyy")
 
-    private var selectedDay: Int = currentDay
-
     private fun getDaysInMonth(): ArrayList<Day>{
         val monthCalendar = cal.clone() as Calendar
         val maxDaysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
@@ -69,10 +67,7 @@ class FragmentGames : Fragment() {
             dates.add(monthCalendar.time)
             monthCalendar.add(Calendar.DAY_OF_MONTH, 1)
         }
-
         var dni: ArrayList<Day> = arrayListOf()
-
-        Log.d("TEST", dates.size.toString())
         for (item in dates)
         {
             var kalendarz = Calendar.getInstance()
@@ -112,10 +107,12 @@ class FragmentGames : Fragment() {
         calendarDays = getDaysInMonth()
 
         myLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        myAdapter = CalendarAdapter(calendarDays)
+        myAdapter = CalendarAdapter(calendarDays, viewModel)
 
         myLayoutManager2 = LinearLayoutManager(context)
-        myAdapter2 = GamesAdapter(viewModel.gamesByDate?.data)
+        myAdapter2 = GamesAdapter(viewModel.gamesByDate)
+
+        viewModel.gamesByDate.observe(viewLifecycleOwner, androidx.lifecycle.Observer { myAdapter2.notifyDataSetChanged() })
 
         return inflater.inflate(R.layout.fragment_games, container, false)
     }
@@ -131,9 +128,9 @@ class FragmentGames : Fragment() {
         recyclerView2 = gamesRecyclerView.apply {
             this.layoutManager = myLayoutManager2
             this.adapter = myAdapter2
-            viewModel.getGamesByDate(DataSource.createDate(), DataSource.createDate())
-            myAdapter2.notifyDataSetChanged()
         }
+
+        calendarRecyclerView.scrollToPosition(DataSource.selectedDay-3)
 
         calendar_prev_button.setOnClickListener {
 
@@ -152,12 +149,6 @@ class FragmentGames : Fragment() {
             myAdapter.notifyDataSetChanged()
         }
         calendar_CurrentMonth.text = sdf.format(cal.time)
-
-        szukajBtn.setOnClickListener {
-            viewModel.getGamesByDate(DataSource.createDate(), DataSource.createDate())
-            myAdapter2.games = viewModel.gamesByDate?.data
-            myAdapter2.notifyDataSetChanged()
-        }
     }
 
     companion object {

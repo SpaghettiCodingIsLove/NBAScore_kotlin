@@ -11,27 +11,14 @@ import com.example.nbascore.Model.Repositories.GameRepository
 import kotlinx.coroutines.launch
 
 class GameViewModel(application: Application) : AndroidViewModel(application) {
-    private var _allGames: GameData? = null
-    var allGames: GameData? = null
-        get()= _allGames
-
-
-    private var _gamesByDate: GameData? = null
-    var gamesByDate: GameData? = null
+    private var _gamesByDate: MutableLiveData<ArrayList<Game>> = MutableLiveData()
+    val gamesByDate: LiveData<ArrayList<Game>>
         get()= _gamesByDate
-
-
-    fun getAllGames()
-    {
-        viewModelScope.launch {
-            _allGames = GameRepository.getAllGames()
-        }
-    }
 
     fun getGamesByDate(startDate: String, endDate: String)
     {
         viewModelScope.launch {
-            _gamesByDate = GameRepository.getGamesByDate(startDate, endDate)
+            _gamesByDate.value = GameRepository.getGamesByDate(startDate, endDate)?.data
         }
     }
 }
