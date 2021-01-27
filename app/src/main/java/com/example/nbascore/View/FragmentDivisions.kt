@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import com.example.nbascore.Model.Helper
+import com.example.nbascore.Model.HelperClass
 import com.example.nbascore.R
-import kotlinx.android.synthetic.main.fragment_conferences.*
 import kotlinx.android.synthetic.main.fragment_divisions.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -47,32 +46,32 @@ class FragmentDivisions : Fragment() {
 
         buttonAtlantic.setOnClickListener{
                 view -> view.findNavController().navigate(R.id.action_fragmentDivisions_to_fragmentTable)
-            Helper.TeamsTypeName ="atlantic"
+            HelperClass.TeamsTypeName ="Atlantic"
         }
 
         buttonCentral.setOnClickListener{
                 view -> view.findNavController().navigate(R.id.action_fragmentDivisions_to_fragmentTable)
-            Helper.TeamsTypeName ="central"
+            HelperClass.TeamsTypeName ="Central"
         }
 
         buttonSoutheast.setOnClickListener{
                 view -> view.findNavController().navigate(R.id.action_fragmentDivisions_to_fragmentTable)
-            Helper.TeamsTypeName ="southeast"
+            HelperClass.TeamsTypeName ="Southeast"
         }
 
         buttonNorthwest.setOnClickListener{
                 view -> view.findNavController().navigate(R.id.action_fragmentDivisions_to_fragmentTable)
-            Helper.TeamsTypeName ="northwest"
+            HelperClass.TeamsTypeName ="Northwest"
         }
 
         buttonPacific.setOnClickListener{
                 view -> view.findNavController().navigate(R.id.action_fragmentDivisions_to_fragmentTable)
-            Helper.TeamsTypeName ="pacific"
+            HelperClass.TeamsTypeName ="Pacific"
         }
 
         buttonSouthwest.setOnClickListener{
                 view -> view.findNavController().navigate(R.id.action_fragmentDivisions_to_fragmentTable)
-            Helper.TeamsTypeName ="southwest"
+            HelperClass.TeamsTypeName ="Southwest"
         }
     }
 

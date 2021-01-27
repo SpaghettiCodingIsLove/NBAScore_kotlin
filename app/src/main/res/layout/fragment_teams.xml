@@ -30,6 +30,7 @@
             android:text="Divisions"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/conferencesButton" />
+            app:layout_constraintTop_toBottomOf="@+id/conferencesButton"
+            android:backgroundTint="@color/red"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

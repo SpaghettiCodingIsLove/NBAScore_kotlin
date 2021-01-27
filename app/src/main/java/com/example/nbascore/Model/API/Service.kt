@@ -37,7 +37,7 @@ object Service {
 
     val TeamApi: TeamAPI by lazy {
         retrofit
-                .create(TeamApi::class.java)
+                .create(TeamAPI::class.java)
     }
 
 }

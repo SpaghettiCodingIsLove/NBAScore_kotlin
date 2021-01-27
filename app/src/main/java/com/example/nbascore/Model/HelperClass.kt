@@ -1,6 +1,6 @@
 package com.example.nbascore.Model
 
-class Helper {
+class HelperClass {
     companion object {
         var CurrTeam: String = ""
         var TeamsType: String = ""

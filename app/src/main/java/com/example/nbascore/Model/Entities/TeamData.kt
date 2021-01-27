@@ -1,7 +1,7 @@
 package com.example.nbascore.Model.Entities
 
 data class TeamData(
-        val data: List<Team>,
+        val data: ArrayList<Team>,
         val meta: Meta
 ) {
 }

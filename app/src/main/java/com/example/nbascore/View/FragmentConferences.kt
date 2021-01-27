@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import com.example.nbascore.Model.Helper
+import com.example.nbascore.Model.HelperClass
 import com.example.nbascore.R
 import kotlinx.android.synthetic.main.fragment_conferences.*
-import kotlinx.android.synthetic.main.fragment_teams.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,12 +46,12 @@ class FragmentConferences : Fragment() {
 
         westButton.setOnClickListener{
                 view -> view.findNavController().navigate(R.id.action_fragmentConferences_to_fragmentTable)
-                Helper.TeamsTypeName ="west"
+                HelperClass.TeamsTypeName ="West"
         }
 
         eastButton.setOnClickListener{
                 view -> view.findNavController().navigate(R.id.action_fragmentConferences_to_fragmentTable)
-                Helper.TeamsTypeName = "east"
+                HelperClass.TeamsTypeName = "East"
         }
     }
 

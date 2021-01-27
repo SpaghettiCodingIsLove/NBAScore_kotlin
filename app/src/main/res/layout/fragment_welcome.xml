@@ -26,7 +26,7 @@
 
     <Button
         android:id="@+id/goToPlayers"
-        android:layout_width="wrap_content"
+        android:layout_width="99dp"
         android:layout_height="wrap_content"
         android:text="PLAYERS"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,8 +38,9 @@
 
     <Button
         android:id="@+id/goToClubs"
-        android:layout_width="wrap_content"
+        android:layout_width="99dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
         android:text="CLUBS"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +51,7 @@
 
     <Button
         android:id="@+id/goToGames"
-        android:layout_width="wrap_content"
+        android:layout_width="99dp"
         android:layout_height="wrap_content"
         android:text="Games"
         app:layout_constraintBottom_toBottomOf="parent"

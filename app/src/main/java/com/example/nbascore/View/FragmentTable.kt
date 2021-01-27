@@ -5,7 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.nbascore.Model.HelperClass
 import com.example.nbascore.R
+import com.example.nbascore.ViewModel.TeamAdapter
+import com.example.nbascore.ViewModel.TeamViewModel
+import kotlinx.android.synthetic.main.fragment_table.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +29,12 @@ class FragmentTable : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private  lateinit var viewModel: TeamViewModel
+
+    private lateinit var myAdapter: TeamAdapter
+    private lateinit var myLayoutManager: LinearLayoutManager
+    private lateinit var recyclerView: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,9 +47,28 @@ class FragmentTable : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
+        viewModel = ViewModelProvider(requireActivity()).get(TeamViewModel::class.java)
+        viewModel.getAllTeams()
+        myAdapter = TeamAdapter(viewModel.allTeams)
+        myLayoutManager = LinearLayoutManager(context)
+
+        viewModel.allTeams.observe(viewLifecycleOwner, androidx.lifecycle.Observer { myAdapter.notifyDataSetChanged() })
+
         return inflater.inflate(R.layout.fragment_table, container, false)
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recyclerView = teamsTable.apply {
+            this.layoutManager = myLayoutManager
+            this.adapter = myAdapter
+        }
+
+        tableName.text = HelperClass.TeamsTypeName
+    }
+
 
     companion object {
         /**

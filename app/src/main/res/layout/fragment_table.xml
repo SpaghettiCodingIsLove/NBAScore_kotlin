@@ -7,10 +7,6 @@
     tools:context=".View.FragmentTable">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -33,7 +29,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tableName" />
+            app:layout_constraintTop_toBottomOf="@+id/tableName"
+            android:paddingBottom="?attr/actionBarSize"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </FrameLayout>
