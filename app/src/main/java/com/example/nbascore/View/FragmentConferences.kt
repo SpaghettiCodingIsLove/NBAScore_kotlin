@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.example.nbascore.Model.Helper
 import com.example.nbascore.R
-import kotlinx.android.synthetic.main.fragment_welcome.*
+import kotlinx.android.synthetic.main.fragment_conferences.*
+import kotlinx.android.synthetic.main.fragment_teams.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,10 +18,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [FragmentWelcome.newInstance] factory method to
+ * Use the [FragmentConferences.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FragmentWelcome : Fragment() {
+class FragmentConferences : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -37,18 +39,20 @@ class FragmentWelcome : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_welcome, container, false)
+        return inflater.inflate(R.layout.fragment_conferences, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        goToGames.setOnClickListener {
-            view -> view.findNavController().navigate(R.id.action_fragmentWelcome_to_fragmentGames)
+        westButton.setOnClickListener{
+                view -> view.findNavController().navigate(R.id.action_fragmentConferences_to_fragmentTable)
+                Helper.TeamsTypeName ="west"
         }
 
-        goToClubs.setOnClickListener {
-            view -> view.findNavController().navigate(R.id.action_fragmentWelcome_to_fragmentTeams)
+        eastButton.setOnClickListener{
+                view -> view.findNavController().navigate(R.id.action_fragmentConferences_to_fragmentTable)
+                Helper.TeamsTypeName = "east"
         }
     }
 
@@ -59,12 +63,12 @@ class FragmentWelcome : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentWelcome.
+         * @return A new instance of fragment FragmentConferences.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            FragmentWelcome().apply {
+            FragmentConferences().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

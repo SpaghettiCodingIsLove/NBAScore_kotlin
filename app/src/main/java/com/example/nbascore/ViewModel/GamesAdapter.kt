@@ -55,11 +55,13 @@ class GamesAdapter(var games: LiveData<ArrayList<Game>>): RecyclerView.Adapter<G
 
         if(games.value?.get(position)?.home_team_score!! > games.value?.get(position)?.visitor_team_score!!)
         {
-            homeTeamScore.setTextColor(Color.BLACK)
+            homeTeamScore.setTextColor(Color.parseColor("#c9082a"))
+            visitorTeamScore.setTextColor(Color.WHITE)
         }
         else if(games.value?.get(position)?.home_team_score!! < games.value?.get(position)?.visitor_team_score!!)
         {
-            visitorTeamScore.setTextColor(Color.BLACK)
+            visitorTeamScore.setTextColor(Color.parseColor("#c9082a"))
+            homeTeamScore.setTextColor(Color.WHITE)
         }
         else
         {
@@ -69,25 +71,27 @@ class GamesAdapter(var games: LiveData<ArrayList<Game>>): RecyclerView.Adapter<G
 
         if(games.value?.get(position)?.postseason == false)
         {
-            gameTime.setBackgroundColor(Color.parseColor("#3CABF5"))
-            homeTeam.setBackgroundColor(Color.parseColor("#3CABF5"))
-            homeTeamScore.setBackgroundColor(Color.parseColor("#3CABF5"))
-            gameQuart.setBackgroundColor(Color.parseColor("#3CABF5"))
-            visitorTeamScore.setBackgroundColor(Color.parseColor("#3CABF5"))
-            visitorTeam.setBackgroundColor(Color.parseColor("#3CABF5"))
-            constraintLayoutGames.setBackgroundColor(Color.parseColor("#3CABF5"))
-            breakTV.setBackgroundColor(Color.parseColor("#3CABF5"))
+            val blueColor = Color.parseColor("#17408b")
+            gameTime.setBackgroundColor(blueColor)
+            homeTeam.setBackgroundColor(blueColor)
+            homeTeamScore.setBackgroundColor(blueColor)
+            gameQuart.setBackgroundColor(blueColor)
+            visitorTeamScore.setBackgroundColor(blueColor)
+            visitorTeam.setBackgroundColor(blueColor)
+            constraintLayoutGames.setBackgroundColor(blueColor)
+            breakTV.setBackgroundColor(blueColor)
         }
         else
         {
-            gameTime.setBackgroundColor(Color.parseColor("#F55A6C"))
-            homeTeam.setBackgroundColor(Color.parseColor("#F55A6C"))
-            homeTeamScore.setBackgroundColor(Color.parseColor("#F55A6C"))
-            gameQuart.setBackgroundColor(Color.parseColor("#F55A6C"))
-            visitorTeamScore.setBackgroundColor(Color.parseColor("#F55A6C"))
-            visitorTeam.setBackgroundColor(Color.parseColor("#F55A6C"))
-            constraintLayoutGames.setBackgroundColor(Color.parseColor("#F55A6C"))
-            breakTV.setBackgroundColor(Color.parseColor("#F55A6C"))
+            val redColor = Color.parseColor("#c9082a")
+            gameTime.setBackgroundColor(redColor)
+            homeTeam.setBackgroundColor(redColor)
+            homeTeamScore.setBackgroundColor(redColor)
+            gameQuart.setBackgroundColor(redColor)
+            visitorTeamScore.setBackgroundColor(redColor)
+            visitorTeam.setBackgroundColor(redColor)
+            constraintLayoutGames.setBackgroundColor(redColor)
+            breakTV.setBackgroundColor(redColor)
         }
 
         holder.itemView.setOnClickListener {

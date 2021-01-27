@@ -48,8 +48,8 @@ class CalendarAdapter(var days: ArrayList<Day>, var viewModel: GameViewModel): R
 
         if (days[position].dayOfWeek == 1)
         {
-            dayOfWeek.setTextColor(Color.RED)
-            day.setTextColor(Color.RED)
+            dayOfWeek.setTextColor(Color.parseColor("#c9082a"))
+            day.setTextColor(Color.parseColor("#c9082a"))
         }
         else
         {
@@ -59,8 +59,8 @@ class CalendarAdapter(var days: ArrayList<Day>, var viewModel: GameViewModel): R
 
         if(days[position].isEnabled)
         {
-            dayOfWeek.setBackgroundColor(Color.parseColor("#8FB399"))
-            day.setBackgroundColor(Color.parseColor("#8FB399"))
+            dayOfWeek.setBackgroundColor(Color.parseColor("#17408b"))
+            day.setBackgroundColor(Color.parseColor("#17408b"))
         }
         else
         {
@@ -85,8 +85,8 @@ class CalendarAdapter(var days: ArrayList<Day>, var viewModel: GameViewModel): R
             DataSource.selectedDay = days[position].day
             DataSource.selectedMonth = days[position].month
             DataSource.selectedYear = days[position].year
-            dayOfWeek.setBackgroundColor(Color.parseColor("#8FB399"))
-            day.setBackgroundColor(Color.parseColor("#8FB399"))
+            dayOfWeek.setBackgroundColor(Color.parseColor("#17408b"))
+            day.setBackgroundColor(Color.parseColor("#17408b"))
             viewModel.getGamesByDate(DataSource.createDate(), DataSource.createDate())
         }
     }

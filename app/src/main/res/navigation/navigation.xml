@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_fragmentWelcome_to_fragmentGames"
             app:destination="@id/fragmentGames" />
+        <action
+            android:id="@+id/action_fragmentWelcome_to_fragmentTeams"
+            app:destination="@id/fragmentTeams" />
     </fragment>
     <fragment
         android:id="@+id/fragmentGames"
@@ -33,5 +36,56 @@
         <action
             android:id="@+id/action_fragmentGameStats_to_fragmentGames"
             app:destination="@id/fragmentGames" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentTeams"
+        android:name="com.example.nbascore.View.FragmentTeams"
+        android:label="fragment_teams"
+        tools:layout="@layout/fragment_teams" >
+        <action
+            android:id="@+id/action_fragmentTeams_to_fragmentWelcome"
+            app:destination="@id/fragmentWelcome" />
+        <action
+            android:id="@+id/action_fragmentTeams_to_fragmentConferences"
+            app:destination="@id/fragmentConferences" />
+        <action
+            android:id="@+id/action_fragmentTeams_to_fragmentDivisions"
+            app:destination="@id/fragmentDivisions" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentTable"
+        android:name="com.example.nbascore.View.FragmentTable"
+        android:label="fragment_table"
+        tools:layout="@layout/fragment_table" >
+        <action
+            android:id="@+id/action_fragmentTable_to_fragmentDivisions"
+            app:destination="@id/fragmentDivisions" />
+        <action
+            android:id="@+id/action_fragmentTable_to_fragmentConferences"
+            app:destination="@id/fragmentConferences" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentConferences"
+        android:name="com.example.nbascore.View.FragmentConferences"
+        android:label="fragment_conferences"
+        tools:layout="@layout/fragment_conferences" >
+        <action
+            android:id="@+id/action_fragmentConferences_to_fragmentTable"
+            app:destination="@id/fragmentTable" />
+        <action
+            android:id="@+id/action_fragmentConferences_to_fragmentTeams"
+            app:destination="@id/fragmentTeams" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentDivisions"
+        android:name="com.example.nbascore.View.FragmentDivisions"
+        android:label="fragment_divisions"
+        tools:layout="@layout/fragment_divisions" >
+        <action
+            android:id="@+id/action_fragmentDivisions_to_fragmentTeams"
+            app:destination="@id/fragmentTeams" />
+        <action
+            android:id="@+id/action_fragmentDivisions_to_fragmentTable"
+            app:destination="@id/fragmentTable" />
     </fragment>
 </navigation>
