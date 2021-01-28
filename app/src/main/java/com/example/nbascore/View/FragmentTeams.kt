@@ -44,12 +44,12 @@ class FragmentTeams : Fragment() {
 
         conferencesButton.setOnClickListener{
             view -> view.findNavController().navigate(R.id.action_fragmentTeams_to_fragmentConferences);
-            HelperClass.TeamsType ="conference"
+            HelperClass.Conference ="conference"
         }
 
         divisionsButton.setOnClickListener{
             view -> view.findNavController().navigate(R.id.action_fragmentTeams_to_fragmentDivisions)
-            HelperClass.TeamsType = "division"
+            HelperClass.Conference = "division"
         }
     }
 

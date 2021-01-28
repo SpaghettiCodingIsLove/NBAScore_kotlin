@@ -1,9 +1,12 @@
 package com.example.nbascore.Model
 
+import com.example.nbascore.Model.Entities.Team
+
+
 class HelperClass {
     companion object {
-        var CurrTeam: String = ""
-        var TeamsType: String = ""
-        var TeamsTypeName: String = ""
+        var CurrTeam: Team? = null
+        var Conference: String = ""
+        var Division: String = ""
     }
 }

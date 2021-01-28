@@ -10,5 +10,9 @@ class PlayerRepository {
         suspend fun getAllPlayers(): PlayerData?{
             return Service.playerApi.getAllPlayers().awaitResponse().body()
         }
+
+        suspend fun getPlayersPage(perPage: Int, page: Int) :PlayerData? {
+            return Service.playerApi.getPlayersPage(perPage, page).awaitResponse().body()
+        }
     }
 }

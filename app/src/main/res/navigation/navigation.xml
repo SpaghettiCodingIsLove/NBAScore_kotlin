@@ -63,6 +63,9 @@
         <action
             android:id="@+id/action_fragmentTable_to_fragmentConferences"
             app:destination="@id/fragmentConferences" />
+        <action
+            android:id="@+id/action_fragmentTable_to_fragmentTeamPlayers"
+            app:destination="@id/fragmentTeamPlayers" />
     </fragment>
     <fragment
         android:id="@+id/fragmentConferences"
@@ -86,6 +89,15 @@
             app:destination="@id/fragmentTeams" />
         <action
             android:id="@+id/action_fragmentDivisions_to_fragmentTable"
+            app:destination="@id/fragmentTable" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentTeamPlayers"
+        android:name="com.example.nbascore.View.FragmentTeamPlayers"
+        android:label="fragment_team_players"
+        tools:layout="@layout/fragment_team_players" >
+        <action
+            android:id="@+id/action_fragmentTeamPlayers_to_fragmentTable"
             app:destination="@id/fragmentTable" />
     </fragment>
 </navigation>

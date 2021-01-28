@@ -46,33 +46,35 @@ class FragmentDivisions : Fragment() {
 
         buttonAtlantic.setOnClickListener{
                 view -> view.findNavController().navigate(R.id.action_fragmentDivisions_to_fragmentTable)
-            HelperClass.TeamsTypeName ="Atlantic"
+            HelperClass.Division ="Atlantic"
         }
 
         buttonCentral.setOnClickListener{
                 view -> view.findNavController().navigate(R.id.action_fragmentDivisions_to_fragmentTable)
-            HelperClass.TeamsTypeName ="Central"
+            HelperClass.Division ="Central"
         }
 
         buttonSoutheast.setOnClickListener{
                 view -> view.findNavController().navigate(R.id.action_fragmentDivisions_to_fragmentTable)
-            HelperClass.TeamsTypeName ="Southeast"
+            HelperClass.Division ="Southeast"
         }
 
         buttonNorthwest.setOnClickListener{
                 view -> view.findNavController().navigate(R.id.action_fragmentDivisions_to_fragmentTable)
-            HelperClass.TeamsTypeName ="Northwest"
+            HelperClass.Division ="Northwest"
         }
 
         buttonPacific.setOnClickListener{
                 view -> view.findNavController().navigate(R.id.action_fragmentDivisions_to_fragmentTable)
-            HelperClass.TeamsTypeName ="Pacific"
+            HelperClass.Division ="Pacific"
         }
 
         buttonSouthwest.setOnClickListener{
                 view -> view.findNavController().navigate(R.id.action_fragmentDivisions_to_fragmentTable)
-            HelperClass.TeamsTypeName ="Southwest"
+            HelperClass.Division ="Southwest"
         }
+
+        HelperClass.Conference = ""
     }
 
     companion object {

@@ -46,13 +46,14 @@ class FragmentConferences : Fragment() {
 
         westButton.setOnClickListener{
                 view -> view.findNavController().navigate(R.id.action_fragmentConferences_to_fragmentTable)
-                HelperClass.TeamsTypeName ="West"
+                HelperClass.Conference ="West"
         }
 
         eastButton.setOnClickListener{
                 view -> view.findNavController().navigate(R.id.action_fragmentConferences_to_fragmentTable)
-                HelperClass.TeamsTypeName = "East"
+                HelperClass.Conference = "East"
         }
+        HelperClass.Division = "";
     }
 
     companion object {

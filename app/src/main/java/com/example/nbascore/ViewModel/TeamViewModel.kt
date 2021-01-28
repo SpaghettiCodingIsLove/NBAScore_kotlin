@@ -15,12 +15,43 @@ import kotlinx.coroutines.launch
 class TeamViewModel(application: Application): AndroidViewModel(application) {
     private var _allTeams: MutableLiveData<ArrayList<Team>> = MutableLiveData()
     val allTeams: LiveData<ArrayList<Team>>
-        get()= _allTeams
+        get() = _allTeams
+
+    fun clear() {
+        _allTeams = MutableLiveData()
+    }
 
     fun getAllTeams()
     {
         viewModelScope.launch {
             _allTeams.value = TeamRepository.getAllTeams()?.data
+        }
+    }
+
+    fun getInConference(conference: String)
+    {
+        viewModelScope.launch {
+            var tmp = TeamRepository.getAllTeams()?.data
+            var final: ArrayList<Team> = arrayListOf()
+            tmp?.forEach {
+                if (it.conference == conference) {
+                    final.add(it)
+                }
+            }
+            _allTeams.value = final
+        }
+    }
+
+    fun getInDivision(division: String){
+        viewModelScope.launch {
+            var tmp = TeamRepository.getAllTeams()?.data
+            var final: ArrayList<Team> = arrayListOf()
+            tmp?.forEach {
+                if (it.division == division) {
+                    final.add(it)
+                }
+            }
+            _allTeams.value = final
         }
     }
 
