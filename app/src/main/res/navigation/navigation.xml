@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_fragmentWelcome_to_fragmentTeams"
             app:destination="@id/fragmentTeams" />
+        <action
+            android:id="@+id/action_fragmentWelcome_to_fragmentFavoriteTeams"
+            app:destination="@id/fragmentFavoriteTeams" />
     </fragment>
     <fragment
         android:id="@+id/fragmentGames"
@@ -99,5 +102,26 @@
         <action
             android:id="@+id/action_fragmentTeamPlayers_to_fragmentTable"
             app:destination="@id/fragmentTable" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentFavoriteTeams"
+        android:name="com.example.nbascore.View.FragmentFavoriteTeams"
+        android:label="fragment_favorite_teams"
+        tools:layout="@layout/fragment_favorite_teams" >
+        <action
+            android:id="@+id/action_fragmentFavoriteTeams_to_fragmentWelcome"
+            app:destination="@id/fragmentWelcome" />
+        <action
+            android:id="@+id/action_fragmentFavoriteTeams_to_fragmentFavTeamsGames"
+            app:destination="@id/fragmentFavTeamsGames" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentFavTeamsGames"
+        android:name="com.example.nbascore.View.FragmentFavTeamsGames"
+        android:label="fragment_fav_teams_games"
+        tools:layout="@layout/fragment_fav_teams_games" >
+        <action
+            android:id="@+id/action_fragmentFavTeamsGames_to_fragmentFavoriteTeams"
+            app:destination="@id/fragmentFavoriteTeams" />
     </fragment>
 </navigation>

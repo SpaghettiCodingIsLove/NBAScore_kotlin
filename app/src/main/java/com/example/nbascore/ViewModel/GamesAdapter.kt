@@ -1,10 +1,13 @@
 package com.example.nbascore.ViewModel
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LiveData
@@ -15,8 +18,9 @@ import com.example.nbascore.Model.DataSource
 import com.example.nbascore.Model.Day
 import com.example.nbascore.Model.Entities.Game
 import com.example.nbascore.R
+import com.google.android.material.internal.ContextUtils
 
-class GamesAdapter(var games: LiveData<ArrayList<Game>>): RecyclerView.Adapter<GamesAdapter.GamesHolder>()  {
+class GamesAdapter(var games: LiveData<ArrayList<Game>>, private val context: Context?): RecyclerView.Adapter<GamesAdapter.GamesHolder>()  {
     inner class GamesHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GamesHolder {
@@ -25,13 +29,16 @@ class GamesAdapter(var games: LiveData<ArrayList<Game>>): RecyclerView.Adapter<G
         return GamesHolder(view)
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onBindViewHolder(holder: GamesHolder, position: Int) {
         var gameTime = holder.itemView.findViewById<TextView>(R.id.GameTime)
-        var homeTeam = holder.itemView.findViewById<TextView>(R.id.homeTeam)
+        var homeTeam = holder.itemView.findViewById<TextView>(R.id.homeTeamName)
+        var homeTeamImage = holder.itemView.findViewById<ImageView>(R.id.homeTeam)
         var homeTeamScore = holder.itemView.findViewById<TextView>(R.id.HomeTeamScore)
         var gameQuart = holder.itemView.findViewById<TextView>(R.id.GameQuart)
         var visitorTeamScore = holder.itemView.findViewById<TextView>(R.id.VisitorTeamScore)
-        var visitorTeam = holder.itemView.findViewById<TextView>(R.id.VisitorTeam)
+        var visitorTeam = holder.itemView.findViewById<TextView>(R.id.visitorTeamName)
+        var visitorTeamImage = holder.itemView.findViewById<ImageView>(R.id.VisitorTeam)
         var constraintLayoutGames = holder.itemView.findViewById<ConstraintLayout>(R.id.constraintLayoutOneRow)
         var breakTV = holder.itemView.findViewById<TextView>(R.id.Break)
 
@@ -40,6 +47,14 @@ class GamesAdapter(var games: LiveData<ArrayList<Game>>): RecyclerView.Adapter<G
         gameTime.text = games.value?.get(position)?.status
         homeTeamScore.text = games.value?.get(position)?.home_team_score.toString()
         visitorTeamScore.text = games.value?.get(position)?.visitor_team_score.toString()
+
+        homeTeamImage.setImageDrawable(context!!.resources.getDrawable( context.resources.getIdentifier(games.value?.get(position)?.home_team?.abbreviation?.toLowerCase(), "drawable", ContextUtils.getActivity(
+            context
+        )?.packageName)))
+
+        visitorTeamImage.setImageDrawable(context!!.resources.getDrawable( context.resources.getIdentifier(games.value?.get(position)?.visitor_team?.abbreviation?.toLowerCase(), "drawable", ContextUtils.getActivity(
+            context
+        )?.packageName)))
 
         if(games.value?.get(position)?.status == "Final")
         {

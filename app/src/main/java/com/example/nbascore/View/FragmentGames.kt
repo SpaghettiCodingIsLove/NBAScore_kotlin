@@ -110,7 +110,7 @@ class FragmentGames : Fragment() {
         myAdapter = CalendarAdapter(calendarDays, viewModel)
 
         myLayoutManager2 = LinearLayoutManager(context)
-        myAdapter2 = GamesAdapter(viewModel.gamesByDate)
+        myAdapter2 = GamesAdapter(viewModel.gamesByDate, context)
 
         viewModel.gamesByDate.observe(viewLifecycleOwner, androidx.lifecycle.Observer { myAdapter2.notifyDataSetChanged() })
 

@@ -31,7 +31,7 @@
         android:text="PLAYERS"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/goToClubs"
-        app:layout_constraintHorizontal_bias="0.435"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/napis"
         app:layout_constraintVertical_bias="0.100000024" />
@@ -44,7 +44,7 @@
         android:text="CLUBS"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/napis"
         app:layout_constraintVertical_bias="0.100000024" />
@@ -54,12 +54,27 @@
         android:layout_width="99dp"
         android:layout_height="wrap_content"
         android:text="Games"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@id/goToFavTeams"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
-        app:layout_constraintStart_toEndOf="@+id/goToClubs"
-        app:layout_constraintTop_toBottomOf="@+id/napis"
+        app:layout_constraintHorizontal_bias="0.435"
+        app:layout_constraintStart_toStartOf="@id/goToPlayers"
+        app:layout_constraintTop_toBottomOf="@+id/goToPlayers"
         app:layout_constraintVertical_bias="0.100000024" />
+
+    <Button
+        android:id="@+id/goToFavTeams"
+        android:layout_width="99dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@id/goToClubs"
+        app:layout_constraintTop_toBottomOf="@+id/goToClubs"
+        app:layout_constraintVertical_bias="0.100000024"
+        android:text="FAV TEAMS"
+        />
 
     <ImageView
         android:id="@+id/imageView"

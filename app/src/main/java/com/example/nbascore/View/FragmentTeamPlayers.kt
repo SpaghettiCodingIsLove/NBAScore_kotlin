@@ -2,15 +2,18 @@ package com.example.nbascore.View
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nbascore.Model.HelperClass
 import com.example.nbascore.R
+import com.example.nbascore.ViewModel.FavoriteTeamViewModel
 import com.example.nbascore.ViewModel.PlayerAdapter
 import com.example.nbascore.ViewModel.PlayerViewModel
 import com.google.android.material.internal.ContextUtils
@@ -32,7 +35,8 @@ class FragmentTeamPlayers : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private  lateinit var viewModel: PlayerViewModel
+    private lateinit var viewModel: PlayerViewModel
+    private lateinit var favTeamsViewModel: FavoriteTeamViewModel
 
     private lateinit var myAdapter: PlayerAdapter
     private lateinit var myLayoutManager: LinearLayoutManager
@@ -53,6 +57,8 @@ class FragmentTeamPlayers : Fragment() {
         viewModel.clear()
         viewModel.getPlayersInTeam(HelperClass.CurrTeam?.id)
 
+        favTeamsViewModel = ViewModelProvider(requireActivity()).get(FavoriteTeamViewModel::class.java)
+
         myAdapter = PlayerAdapter(viewModel.allPlayers)
         myLayoutManager = LinearLayoutManager(context)
 
@@ -70,6 +76,11 @@ class FragmentTeamPlayers : Fragment() {
         recyclerView = teamPlayers.apply {
             this.layoutManager = myLayoutManager
             this.adapter = myAdapter
+        }
+
+        addToFavTeams.setOnClickListener {
+            favTeamsViewModel.addTeam(HelperClass.CurrTeam?.id!!, HelperClass.CurrTeam?.abbreviation!!, HelperClass.CurrTeam?.city!!, HelperClass.CurrTeam?.conference!!, HelperClass.CurrTeam?.division!!, HelperClass.CurrTeam?.full_name!!, HelperClass.CurrTeam?.name!!)
+            Toast.makeText(context,"Dodałeś do ulubionych",Toast.LENGTH_SHORT).show()
         }
 
         teamPic.setImageDrawable(requireContext().resources.getDrawable(
