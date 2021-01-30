@@ -14,4 +14,6 @@ interface GameAPI {
     @GET("games/")
     fun getGamesByDate(@Query("start_date") startDate: String, @Query("end_date") endDate: String) : Call<GameData>
 
+    @GET("games/")
+    fun getFavoriteTeamsGames(@Query("seasons[]") season: Int, @Query("team_ids[]") teamId: Long) : Call<GameData>
 }

@@ -15,5 +15,9 @@ class GameRepository {
         suspend fun getGamesByDate(startDate: String, endDate: String): GameData?{
             return  Service.gameApi.getGamesByDate(startDate, endDate).awaitResponse().body()
         }
+
+        suspend fun getFavoriteTeamsGames(seasons: Int, teamId :Long) : GameData?{
+            return Service.gameApi.getFavoriteTeamsGames(seasons, teamId).awaitResponse().body()
+        }
     }
 }

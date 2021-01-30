@@ -15,10 +15,20 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     val gamesByDate: LiveData<ArrayList<Game>>
         get()= _gamesByDate
 
+    private var _favoriteGames: MutableLiveData<ArrayList<Game>> = MutableLiveData()
+    val favoriteGames: LiveData<ArrayList<Game>>
+        get()= _favoriteGames
+
     fun getGamesByDate(startDate: String, endDate: String)
     {
         viewModelScope.launch {
             _gamesByDate.value = GameRepository.getGamesByDate(startDate, endDate)?.data
+        }
+    }
+
+    fun getFavoriteTeamsGames(season: Int, teamId: Long){
+        viewModelScope.launch {
+            _favoriteGames.value = GameRepository.getFavoriteTeamsGames(season, teamId)?.data
         }
     }
 }
