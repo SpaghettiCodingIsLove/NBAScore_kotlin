@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
@@ -52,6 +53,7 @@ class FavoriteTeamsAdapter(var favTeams: LiveData<List<FavoriteTeam>>, private v
     fun removeAt(position: Int){
         viewModel.deleteTeam(favTeams.value?.get(position)!!)
         notifyDataSetChanged()
+        Toast.makeText(context,"Usunąłeś z ulubionych", Toast.LENGTH_SHORT).show()
     }
 
     override fun getItemCount(): Int {
