@@ -18,8 +18,6 @@ abstract class SwipeToDeleteCallback(context: Context?) : ItemTouchHelper.Simple
 
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-        if(viewHolder?.adapterPosition == 10) return 0
-
         return super.getMovementFlags(recyclerView, viewHolder)
     }
 
