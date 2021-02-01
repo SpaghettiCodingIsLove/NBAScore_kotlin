@@ -3,7 +3,6 @@ package com.example.nbascore.ViewModel
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,26 +10,24 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nbascore.Model.DataSource
-import com.example.nbascore.Model.Day
 import com.example.nbascore.Model.Entities.Game
 import com.example.nbascore.R
 import com.google.android.material.internal.ContextUtils
 
-class GamesAdapter(var games: LiveData<ArrayList<Game>>, private val context: Context?): RecyclerView.Adapter<GamesAdapter.GamesHolder>()  {
-    inner class GamesHolder(view: View): RecyclerView.ViewHolder(view)
+class GamesAdapter2(var games: LiveData<ArrayList<Game>>, private val context: Context?): RecyclerView.Adapter<GamesAdapter2.GamesHolder2>()  {
+    inner class GamesHolder2(view: View): RecyclerView.ViewHolder(view)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GamesHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GamesHolder2 {
         val view= LayoutInflater.from(parent.context)
                 .inflate(R.layout.games_one_row,parent,false)
-        return GamesHolder(view)
+        return GamesHolder2(view)
     }
 
     @SuppressLint("RestrictedApi")
-    override fun onBindViewHolder(holder: GamesHolder, position: Int) {
+    override fun onBindViewHolder(holder: GamesHolder2, position: Int) {
         var gameTime = holder.itemView.findViewById<TextView>(R.id.GameTime)
         var homeTeam = holder.itemView.findViewById<TextView>(R.id.homeTeamName)
         var homeTeamImage = holder.itemView.findViewById<ImageView>(R.id.homeTeam)
@@ -42,8 +39,8 @@ class GamesAdapter(var games: LiveData<ArrayList<Game>>, private val context: Co
         var constraintLayoutGames = holder.itemView.findViewById<ConstraintLayout>(R.id.constraintLayoutOneRow)
         var breakTV = holder.itemView.findViewById<TextView>(R.id.Break)
 
-        homeTeam.text = games.value?.get(position)?.home_team?.abbreviation
-        visitorTeam.text = games.value?.get(position)?.visitor_team?.abbreviation
+        homeTeam.text = games.value?.get(position)?.home_team?.name
+        visitorTeam.text = games.value?.get(position)?.visitor_team?.name
         gameTime.text = games.value?.get(position)?.status
         homeTeamScore.text = games.value?.get(position)?.home_team_score.toString()
         visitorTeamScore.text = games.value?.get(position)?.visitor_team_score.toString()
@@ -58,12 +55,15 @@ class GamesAdapter(var games: LiveData<ArrayList<Game>>, private val context: Co
 
         if(games.value?.get(position)?.status == "Final")
         {
-            gameQuart.text = "4Q 00:00"
+            gameQuart.text = games.value?.get(position)?.status
+            gameTime.text = games.value?.get(position)?.date?.substring(0, 10)
         }
         else
         {
-            if(games.value?.get(position)?.time == "")
-                gameQuart.text = "1Q 12:00"
+            if(games.value?.get(position)?.time == "") {
+                gameQuart.text = "0Q 12:00"
+                gameTime.text = games.value?.get(position)?.date?.substring(0, 10) + " " + games.value?.get(position)?.status
+            }
             else
                 gameQuart.text = games.value?.get(position)?.time
         }
@@ -110,7 +110,7 @@ class GamesAdapter(var games: LiveData<ArrayList<Game>>, private val context: Co
         }
 
         holder.itemView.setOnClickListener {
-            view -> view.findNavController().navigate(R.id.action_fragmentGames_to_fragmentGameStats)
+            view -> view.findNavController().navigate(R.id.action_fragmentFavTeamsGames_to_fragmentGameStats)
             DataSource.selectedGame = games.value?.get(position)
         }
     }

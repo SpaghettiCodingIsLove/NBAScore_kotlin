@@ -3,6 +3,7 @@ package com.example.nbascore.ViewModel
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,7 @@ import com.example.nbascore.Model.Entities.Game
 import com.example.nbascore.R
 import com.google.android.material.internal.ContextUtils
 
-class FavoriteTeamsAdapter(var favTeams: LiveData<List<FavoriteTeam>>, private val context: Context?): RecyclerView.Adapter<FavoriteTeamsAdapter.FavTeamsHolder>()  {
+class FavoriteTeamsAdapter(var favTeams: LiveData<List<FavoriteTeam>>, private val context: Context?, val viewModel: FavoriteTeamViewModel): RecyclerView.Adapter<FavoriteTeamsAdapter.FavTeamsHolder>()  {
     inner class FavTeamsHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavTeamsHolder {
@@ -46,6 +47,11 @@ class FavoriteTeamsAdapter(var favTeams: LiveData<List<FavoriteTeam>>, private v
             DataSource.currentFavTeamName = favTeams.value?.get(position)?.full_name!!
             DataSource.currentTeamAbbreaviation = favTeams.value?.get(position)?.abbreviation!!
         }
+    }
+
+    fun removeAt(position: Int){
+        viewModel.deleteTeam(favTeams.value?.get(position)!!)
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
