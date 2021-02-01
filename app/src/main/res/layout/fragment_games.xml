@@ -18,11 +18,10 @@
 
         <Button
             android:id="@+id/calendar_prev_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:background="@drawable/rounded_button"
-            android:text="&lt;"
-            android:textColor="@color/white"
+            android:drawableTop="@drawable/ic_baseline_arrow_back_ios_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/calendar_CurrentMonth"
@@ -42,11 +41,10 @@
 
         <Button
             android:id="@+id/calendar_next_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:background="@drawable/rounded_button"
-            android:text="&gt;"
-            android:textColor="@color/white"
+            android:drawableTop="@drawable/ic_baseline_arrow_forward_ios_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/calendar_CurrentMonth"
             app:layout_constraintRight_toRightOf="parent"

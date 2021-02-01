@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_fragmentGameStats_to_fragmentGames"
             app:destination="@id/fragmentGames" />
+        <action
+            android:id="@+id/action_fragmentGameStats_to_fragmentFavTeamsGames"
+            app:destination="@id/fragmentFavTeamsGames" />
     </fragment>
     <fragment
         android:id="@+id/fragmentTeams"
@@ -123,5 +126,8 @@
         <action
             android:id="@+id/action_fragmentFavTeamsGames_to_fragmentFavoriteTeams"
             app:destination="@id/fragmentFavoriteTeams" />
+        <action
+            android:id="@+id/action_fragmentFavTeamsGames_to_fragmentGameStats"
+            app:destination="@id/fragmentGameStats" />
     </fragment>
 </navigation>

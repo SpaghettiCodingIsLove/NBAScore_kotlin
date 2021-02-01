@@ -7,13 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nbascore.R
-import com.example.nbascore.ViewModel.CalendarAdapter
-import com.example.nbascore.ViewModel.FavoriteTeamViewModel
-import com.example.nbascore.ViewModel.FavoriteTeamsAdapter
-import com.example.nbascore.ViewModel.GamesAdapter
+import com.example.nbascore.ViewModel.*
 import kotlinx.android.synthetic.main.fragment_favorite_teams.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -53,7 +51,7 @@ class FragmentFavoriteTeams : Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(FavoriteTeamViewModel::class.java)
 
         myLayoutManager = LinearLayoutManager(context)
-        myAdapter = FavoriteTeamsAdapter(viewModel.teams, context)
+        myAdapter = FavoriteTeamsAdapter(viewModel.teams, context, viewModel)
 
         viewModel.teams.observe(viewLifecycleOwner, Observer {
             myAdapter.notifyDataSetChanged()
@@ -70,6 +68,17 @@ class FragmentFavoriteTeams : Fragment() {
             this.layoutManager = myLayoutManager
             this.adapter = myAdapter
         }
+
+        val swipeHandler = object : SwipeToDeleteCallback(context){
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = recyclerView.adapter as FavoriteTeamsAdapter
+                adapter.removeAt(viewHolder.adapterPosition)
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+
     }
 
     companion object {

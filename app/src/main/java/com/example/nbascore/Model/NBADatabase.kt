@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.nbascore.Model.Entities.FavoriteTeam
 import com.example.nbascore.Model.Entities.FavoriteTeamDao
 
-@Database(entities = [FavoriteTeam::class], version = 5, exportSchema = false)
+@Database(entities = [FavoriteTeam::class], version = 7, exportSchema = false)
 abstract class NBADatabase: RoomDatabase(){
     abstract fun favoriteTeamDao(): FavoriteTeamDao
 

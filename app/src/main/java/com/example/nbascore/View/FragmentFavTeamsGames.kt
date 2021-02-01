@@ -14,7 +14,7 @@ import com.example.nbascore.Model.DataSource
 import com.example.nbascore.Model.HelperClass
 import com.example.nbascore.R
 import com.example.nbascore.ViewModel.GameViewModel
-import com.example.nbascore.ViewModel.GamesAdapter
+import com.example.nbascore.ViewModel.GamesAdapter2
 import com.google.android.material.internal.ContextUtils
 import kotlinx.android.synthetic.main.fragment_fav_teams_games.*
 import java.util.*
@@ -36,7 +36,7 @@ class FragmentFavTeamsGames : Fragment() {
 
     private lateinit var viewModel: GameViewModel
 
-    private lateinit var myAdapter: GamesAdapter
+    private lateinit var myAdapter: GamesAdapter2
     private lateinit var myLayoutManager: LinearLayoutManager
     private lateinit var recyclerView: RecyclerView
 
@@ -70,7 +70,7 @@ class FragmentFavTeamsGames : Fragment() {
         viewModel.getFavoriteTeamsGames(currentSeason, DataSource.currentFavTeamId)
 
         myLayoutManager = LinearLayoutManager(context)
-        myAdapter = GamesAdapter(viewModel.favoriteGames, context)
+        myAdapter = GamesAdapter2(viewModel.favoriteGames, context)
 
         viewModel.favoriteGames.observe(viewLifecycleOwner, Observer {
             myAdapter.notifyDataSetChanged()
