@@ -18,4 +18,7 @@ class FavoriteTeamRepository(val favoriteTeamDao: FavoriteTeamDao) {
         return favoriteTeamDao.getAllFavTeams()
     }
 
+    fun getTeam(id: Long) : List<FavoriteTeam> {
+        return favoriteTeamDao.getTeam(id)
+    }
 }

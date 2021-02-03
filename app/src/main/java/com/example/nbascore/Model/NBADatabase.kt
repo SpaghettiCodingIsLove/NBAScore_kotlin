@@ -28,7 +28,7 @@ abstract class NBADatabase: RoomDatabase(){
                         context.applicationContext,
                         NBADatabase::class.java,
                         "myDatabase"
-                    ).fallbackToDestructiveMigration()
+                    ).fallbackToDestructiveMigration().allowMainThreadQueries()
                         .build()
                     INSTANCE = instance
                     return instance

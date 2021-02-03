@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.nbascore.Model.Entities.FavoriteTeam
+import com.example.nbascore.Model.HelperClass
 import com.example.nbascore.Model.NBADatabase
 import com.example.nbascore.Model.Repositories.FavoriteTeamRepository
 import kotlinx.coroutines.launch
@@ -28,5 +29,13 @@ class FavoriteTeamViewModel(application: Application): AndroidViewModel(applicat
         viewModelScope.launch {
             favoriteTeamRepository.delete(favoriteTeam)
         }
+    }
+
+    fun isFavorite(id: Long) :Boolean{
+        var team = favoriteTeamRepository.getTeam(id)
+        if (team == null || team.count() == 0){
+            return false
+        }
+        return true
     }
 }

@@ -15,4 +15,7 @@ interface FavoriteTeamDao {
 
     @Query("select * from favoriteTeam_table")
     fun getAllFavTeams() : LiveData<List<FavoriteTeam>>
+
+    @Query("select * from favoriteTeam_table where teamId = :id")
+    fun getTeam(id: Long) : List<FavoriteTeam>
 }

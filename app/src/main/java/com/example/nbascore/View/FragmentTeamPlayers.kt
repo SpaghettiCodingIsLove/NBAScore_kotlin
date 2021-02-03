@@ -89,8 +89,10 @@ class FragmentTeamPlayers : Fragment() {
         })
 
         addToFavTeams.setOnClickListener {
-            favTeamsViewModel.addTeam(HelperClass.CurrTeam?.id!!, HelperClass.CurrTeam?.abbreviation!!, HelperClass.CurrTeam?.city!!, HelperClass.CurrTeam?.conference!!, HelperClass.CurrTeam?.division!!, HelperClass.CurrTeam?.full_name!!, HelperClass.CurrTeam?.name!!)
-            Toast.makeText(context,"Dodałeś do ulubionych",Toast.LENGTH_SHORT).show()
+            if (!favTeamsViewModel.isFavorite(HelperClass.CurrTeam!!.id)){
+                favTeamsViewModel.addTeam(HelperClass.CurrTeam?.id!!, HelperClass.CurrTeam?.abbreviation!!, HelperClass.CurrTeam?.city!!, HelperClass.CurrTeam?.conference!!, HelperClass.CurrTeam?.division!!, HelperClass.CurrTeam?.full_name!!, HelperClass.CurrTeam?.name!!)
+                Toast.makeText(context,"Dodałeś do ulubionych",Toast.LENGTH_SHORT).show()
+            }
         }
 
         teamPic.setImageDrawable(requireContext().resources.getDrawable(
