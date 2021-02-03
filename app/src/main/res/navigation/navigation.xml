@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_fragmentWelcome_to_fragmentFavoriteTeams"
             app:destination="@id/fragmentFavoriteTeams" />
+        <action
+            android:id="@+id/action_fragmentWelcome_to_fragmentPlayers"
+            app:destination="@id/fragmentPlayers" />
     </fragment>
     <fragment
         android:id="@+id/fragmentGames"
@@ -129,5 +132,14 @@
         <action
             android:id="@+id/action_fragmentFavTeamsGames_to_fragmentGameStats"
             app:destination="@id/fragmentGameStats" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentPlayers"
+        android:name="com.example.nbascore.View.FragmentPlayers"
+        android:label="fragment_players"
+        tools:layout="@layout/fragment_players" >
+        <action
+            android:id="@+id/action_fragmentPlayers_to_fragmentWelcome"
+            app:destination="@id/fragmentWelcome" />
     </fragment>
 </navigation>
