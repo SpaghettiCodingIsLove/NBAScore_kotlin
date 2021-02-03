@@ -1,12 +1,24 @@
 package com.example.nbascore.View
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.nbascore.Model.DataSource
 import com.example.nbascore.R
+import com.example.nbascore.ViewModel.StatsAdapter
+import com.example.nbascore.ViewModel.StatsViewModel
+import com.google.android.material.internal.ContextUtils
 import kotlinx.android.synthetic.main.fragment_game_stats.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -24,6 +36,12 @@ class FragmentGameStats : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private  lateinit var viewModel: StatsViewModel
+
+    private lateinit var myAdapter: StatsAdapter
+    private lateinit var myLayoutManager: LinearLayoutManager
+    private lateinit var recyclerView: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -35,13 +53,116 @@ class FragmentGameStats : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+
+        viewModel = ViewModelProvider(requireActivity()).get(StatsViewModel::class.java)
+
+        myLayoutManager = LinearLayoutManager(context)
+        myAdapter = StatsAdapter(viewModel.statsFromGame)
+
+        viewModel.getStatsFromGame(DataSource.selectedGame?.id!!)
+
+        viewModel.statsFromGame.observe(viewLifecycleOwner, Observer {
+            myAdapter.notifyDataSetChanged()
+        })
         return inflater.inflate(R.layout.fragment_game_stats, container, false)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables", "RestrictedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        gameStatsTV.text = DataSource.selectedGame?.id.toString() + " " + DataSource.selectedGame?.home_team + " " + DataSource.selectedGame?.visitor_team
+        var gameTime = view.findViewById<TextView>(R.id.GameTime)
+        var homeTeam = view.findViewById<TextView>(R.id.homeTeamName)
+        var homeTeamImage = view.findViewById<ImageView>(R.id.homeTeam)
+        var homeTeamScore = view.findViewById<TextView>(R.id.HomeTeamScore)
+        var gameQuart = view.findViewById<TextView>(R.id.GameQuart)
+        var visitorTeamScore = view.findViewById<TextView>(R.id.VisitorTeamScore)
+        var visitorTeam = view.findViewById<TextView>(R.id.visitorTeamName)
+        var visitorTeamImage = view.findViewById<ImageView>(R.id.VisitorTeam)
+        var constraintLayoutGames = view.findViewById<ConstraintLayout>(R.id.constraintLayoutOneGame)
+        var breakTV = view.findViewById<TextView>(R.id.Break)
+
+        var game = DataSource.selectedGame
+
+        homeTeam.text = game?.home_team?.name
+        visitorTeam.text = game?.visitor_team?.name
+        gameTime.text = game?.status
+        homeTeamScore.text = game?.home_team_score.toString()
+        visitorTeamScore.text = game?.visitor_team_score.toString()
+
+        homeTeamImage.setImageDrawable(requireContext().resources.getDrawable(
+                context?.resources?.getIdentifier(
+                        game?.home_team?.abbreviation?.toLowerCase(), "drawable", ContextUtils.getActivity(
+                        context
+                )?.packageName)!!
+        ))
+
+        visitorTeamImage.setImageDrawable(requireContext().resources.getDrawable(
+                context?.resources?.getIdentifier(
+                        game?.visitor_team?.abbreviation?.toLowerCase(), "drawable", ContextUtils.getActivity(
+                        context
+                )?.packageName)!!
+        ))
+
+        if(game?.status == "Final")
+        {
+            gameQuart.text = "4Q 00:00"
+        }
+        else
+        {
+            if(game?.time == "")
+                gameQuart.text = "1Q 12:00"
+            else
+                gameQuart.text = game?.time
+        }
+
+        if(game?.home_team_score!! > game?.visitor_team_score!!)
+        {
+            homeTeamScore.setTextColor(Color.parseColor("#c9082a"))
+            visitorTeamScore.setTextColor(Color.WHITE)
+        }
+        else if(game?.home_team_score!! < game?.visitor_team_score!!)
+        {
+            visitorTeamScore.setTextColor(Color.parseColor("#c9082a"))
+            homeTeamScore.setTextColor(Color.WHITE)
+        }
+        else
+        {
+            homeTeamScore.setTextColor(Color.WHITE)
+            visitorTeamScore.setTextColor(Color.WHITE)
+        }
+
+        if(game?.postseason == false)
+        {
+            val blueColor = Color.parseColor("#17408b")
+            gameTime.setBackgroundColor(blueColor)
+            homeTeam.setBackgroundColor(blueColor)
+            homeTeamScore.setBackgroundColor(blueColor)
+            gameQuart.setBackgroundColor(blueColor)
+            visitorTeamScore.setBackgroundColor(blueColor)
+            visitorTeam.setBackgroundColor(blueColor)
+            constraintLayoutGames.setBackgroundColor(blueColor)
+            breakTV.setBackgroundColor(blueColor)
+        }
+        else
+        {
+            val redColor = Color.parseColor("#c9082a")
+            gameTime.setBackgroundColor(redColor)
+            homeTeam.setBackgroundColor(redColor)
+            homeTeamScore.setBackgroundColor(redColor)
+            gameQuart.setBackgroundColor(redColor)
+            visitorTeamScore.setBackgroundColor(redColor)
+            visitorTeam.setBackgroundColor(redColor)
+            constraintLayoutGames.setBackgroundColor(redColor)
+            breakTV.setBackgroundColor(redColor)
+        }
+
+        recyclerView = statsRecyclerView.apply {
+            this.layoutManager = myLayoutManager
+            this.adapter = myAdapter
+        }
+
+
     }
 
     companion object {

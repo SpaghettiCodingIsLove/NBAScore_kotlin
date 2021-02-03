@@ -10,5 +10,9 @@ class StatsRepository {
         suspend fun getAllStats(): StatsData?{
             return Service.statsApi.getAllStats().awaitResponse().body()
         }
+
+        suspend fun getStatsFromGame(gameId: Long): StatsData?{
+            return Service.statsApi.getStatsFromGame(gameId).awaitResponse().body()
+        }
     }
 }
