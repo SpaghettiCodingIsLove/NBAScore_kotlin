@@ -33,11 +33,4 @@ class StatsViewModel(application: Application): AndroidViewModel(application) {
             _statsFromGame.value = StatsRepository.getStatsFromGame(gameId)?.data
         }
     }
-
-    fun getStatsFromGame(id: Long)
-    {
-        viewModelScope.launch {
-            //_statsFromGame.value = StatsRepository.getStatsFromGame(id)?.data
-        }
-    }
 }
