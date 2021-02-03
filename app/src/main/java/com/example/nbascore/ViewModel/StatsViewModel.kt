@@ -17,10 +17,20 @@ class StatsViewModel(application: Application): AndroidViewModel(application) {
     val allStats: LiveData<ArrayList<Stats>>
         get()= _allStats
 
+    private var _statsFromGame: MutableLiveData<ArrayList<Stats>> = MutableLiveData()
+    val statsFromGame: LiveData<ArrayList<Stats>>
+        get()= _statsFromGame
+
     fun getAllStats()
     {
         viewModelScope.launch {
             _allStats.value = StatsRepository.getAllStats()?.data
+        }
+    }
+
+    fun getStatsFromGame(gameId: Long){
+        viewModelScope.launch {
+            _statsFromGame.value = StatsRepository.getStatsFromGame(gameId)?.data
         }
     }
 }
