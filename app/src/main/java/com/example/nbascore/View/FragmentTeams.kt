@@ -42,8 +42,10 @@ class FragmentTeams : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        HelperClass.PreviousDivision = ""
+        HelperClass.PreviousConference = ""
         conferencesButton.setOnClickListener{
-            view -> view.findNavController().navigate(R.id.action_fragmentTeams_to_fragmentConferences);
+            view -> view.findNavController().navigate(R.id.action_fragmentTeams_to_fragmentConferences)
             HelperClass.Conference ="conference"
         }
 

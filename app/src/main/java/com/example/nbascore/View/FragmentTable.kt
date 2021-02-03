@@ -49,12 +49,20 @@ class FragmentTable : Fragment() {
     ): View? {
 
         viewModel = ViewModelProvider(requireActivity()).get(TeamViewModel::class.java)
-        viewModel.clear()
+
         if (HelperClass.Conference != ""){
-            viewModel.getInConference(HelperClass.Conference)
+            if (HelperClass.Conference != HelperClass.PreviousConference){
+                viewModel.clear()
+                viewModel.getInConference(HelperClass.Conference)
+                HelperClass.PreviousConference = HelperClass.Conference
+            }
         }
         else if (HelperClass.Division != ""){
-            viewModel.getInDivision(HelperClass.Division)
+            if (HelperClass.Division != HelperClass.PreviousDivision){
+                viewModel.clear()
+                viewModel.getInDivision(HelperClass.Division)
+                HelperClass.PreviousDivision = HelperClass.Division
+            }
         }
 
         myAdapter = TeamAdapter(viewModel.allTeams, context)

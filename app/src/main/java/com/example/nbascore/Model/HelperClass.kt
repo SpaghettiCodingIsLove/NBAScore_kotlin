@@ -8,5 +8,8 @@ class HelperClass {
         var CurrTeam: Team? = null
         var Conference: String = ""
         var Division: String = ""
+        var PreviousConference: String = ""
+        var PreviousDivision: String = ""
+        var AllowBack: Boolean = true
     }
 }

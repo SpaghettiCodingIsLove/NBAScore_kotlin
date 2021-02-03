@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nbascore.Model.HelperClass
@@ -59,10 +61,10 @@ class FragmentTeamPlayers : Fragment() {
 
         favTeamsViewModel = ViewModelProvider(requireActivity()).get(FavoriteTeamViewModel::class.java)
 
-        myAdapter = PlayerAdapter(viewModel.allPlayers)
+        myAdapter = PlayerAdapter(viewModel.PlayersInTeam)
         myLayoutManager = LinearLayoutManager(context)
 
-        viewModel.allPlayers.observe(viewLifecycleOwner, androidx.lifecycle.Observer { myAdapter.notifyDataSetChanged()
+        viewModel.PlayersInTeam.observe(viewLifecycleOwner, androidx.lifecycle.Observer { myAdapter.notifyDataSetChanged()
             progressBar.visibility = View.INVISIBLE
         })
 
@@ -77,6 +79,14 @@ class FragmentTeamPlayers : Fragment() {
             this.layoutManager = myLayoutManager
             this.adapter = myAdapter
         }
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (HelperClass.AllowBack){
+                    view?.findNavController()?.popBackStack(R.id.fragmentTeamPlayers, true)
+                }
+            }
+        })
 
         addToFavTeams.setOnClickListener {
             favTeamsViewModel.addTeam(HelperClass.CurrTeam?.id!!, HelperClass.CurrTeam?.abbreviation!!, HelperClass.CurrTeam?.city!!, HelperClass.CurrTeam?.conference!!, HelperClass.CurrTeam?.division!!, HelperClass.CurrTeam?.full_name!!, HelperClass.CurrTeam?.name!!)

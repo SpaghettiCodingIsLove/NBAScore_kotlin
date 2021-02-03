@@ -6,13 +6,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.nbascore.Model.Entities.Player
+import com.example.nbascore.Model.HelperClass
 import com.example.nbascore.Model.Repositories.PlayerRepository
 import kotlinx.coroutines.launch
 
 class PlayerViewModel(application: Application): AndroidViewModel(application) {
     private var _allPlayers: MutableLiveData<ArrayList<Player>> = MutableLiveData()
+    private var _playersInTeam: MutableLiveData<ArrayList<Player>> = MutableLiveData()
     val allPlayers: LiveData<ArrayList<Player>>
     get()= _allPlayers
+    val PlayersInTeam: LiveData<ArrayList<Player>>
+    get() = _playersInTeam
 
     fun getAllPlayers()
     {
@@ -23,53 +27,63 @@ class PlayerViewModel(application: Application): AndroidViewModel(application) {
 
     fun clear() {
         viewModelScope.launch {
-            _allPlayers = MutableLiveData()
+            _playersInTeam = MutableLiveData()
         }
     }
 
     fun getFullPlayerList() {
         viewModelScope.launch {
-            var currResponse = PlayerRepository.getPlayersPage(100, 1)
-            var final: ArrayList<Player> = arrayListOf()
-            if (currResponse != null) {
-                final.addAll(currResponse.data)
-            }
-            while (currResponse?.meta?.next_page != null){
-                currResponse = PlayerRepository.getPlayersPage(100, currResponse?.meta?.next_page!!)
+            if (_allPlayers.value == null || _allPlayers.value?.count() == 0){
+                var currResponse = PlayerRepository.getPlayersPage(100, 1)
+                var tmp: ArrayList<Player> = arrayListOf()
                 if (currResponse != null) {
-                    final.addAll(currResponse.data)
+                    tmp.addAll(currResponse.data)
                 }
-            }
+                while (currResponse?.meta?.next_page != null){
+                    currResponse = PlayerRepository.getPlayersPage(100, currResponse?.meta?.next_page!!)
+                    if (currResponse != null) {
+                        tmp.addAll(currResponse.data)
+                    }
+                }
 
-            final.sortBy { x -> x.first_name }
-            _allPlayers.value = final
+                tmp.sortBy { x -> x.first_name }
+                _allPlayers.value = tmp
+            }
         }
     }
 
     fun getPlayersInTeam(teamId: Long?) {
         viewModelScope.launch {
-            var currResponse = PlayerRepository.getPlayersPage(100, 1)
-            var tmp: ArrayList<Player> = arrayListOf()
-            if (currResponse != null) {
-                tmp.addAll(currResponse.data)
-            }
-            while (currResponse?.meta?.next_page != null){
-                currResponse = PlayerRepository.getPlayersPage(100, currResponse?.meta?.next_page!!)
+            HelperClass.AllowBack = false
+            if (_allPlayers.value == null || _allPlayers.value?.count() == 0){
+                var currResponse = PlayerRepository.getPlayersPage(100, 1)
+                var tmp: ArrayList<Player> = arrayListOf()
                 if (currResponse != null) {
                     tmp.addAll(currResponse.data)
                 }
+                while (currResponse?.meta?.next_page != null){
+                    currResponse = PlayerRepository.getPlayersPage(100, currResponse?.meta?.next_page!!)
+                    if (currResponse != null) {
+                        tmp.addAll(currResponse.data)
+                    }
+                }
+
+                tmp.sortBy { x -> x.first_name }
+                _allPlayers.value = tmp
             }
+
 
             var final: ArrayList<Player> = arrayListOf()
 
-            tmp.forEach {
+            _allPlayers.value?.forEach {
                 if (it.team?.id == teamId) {
                     final.add(it)
                 }
             }
 
             final.sortBy { x -> x.first_name }
-            _allPlayers.value = final
+            _playersInTeam.value = final
+            HelperClass.AllowBack = true
         }
     }
 }
