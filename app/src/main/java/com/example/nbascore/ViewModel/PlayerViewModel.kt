@@ -12,12 +12,18 @@ import kotlinx.coroutines.launch
 
 class PlayerViewModel(application: Application): AndroidViewModel(application) {
     private var _allPlayers: MutableLiveData<ArrayList<Player>> = MutableLiveData()
-    private var _allPlayers2: MutableLiveData<ArrayList<Player>> = MutableLiveData()
     private var _playersInTeam: MutableLiveData<ArrayList<Player>> = MutableLiveData()
+    private var _filteredPlayers: MutableLiveData<ArrayList<Player>> = MutableLiveData()
+
     val allPlayers: LiveData<ArrayList<Player>>
     get()= _allPlayers
+
     val PlayersInTeam: LiveData<ArrayList<Player>>
     get() = _playersInTeam
+
+    val filteredPlayers: LiveData<ArrayList<Player>>
+    get() = _filteredPlayers
+
 
 
     fun getAllPlayers()
@@ -29,7 +35,7 @@ class PlayerViewModel(application: Application): AndroidViewModel(application) {
 
     fun getSearchedPlayers(word: String){
         viewModelScope.launch {
-            _allPlayers2.value = PlayerRepository.getSearchedPlayers(word)?.data
+            _filteredPlayers.value = PlayerRepository.getSearchedPlayers(word)?.data
         }
     }
 
@@ -42,6 +48,7 @@ class PlayerViewModel(application: Application): AndroidViewModel(application) {
     fun getFullPlayerList() {
         viewModelScope.launch {
             if (_allPlayers.value == null || _allPlayers.value?.count() == 0){
+                HelperClass.AllowBack.value = false
                 var currResponse = PlayerRepository.getPlayersPage(100, 1)
                 var tmp: ArrayList<Player> = arrayListOf()
                 if (currResponse != null) {
@@ -56,13 +63,15 @@ class PlayerViewModel(application: Application): AndroidViewModel(application) {
 
                 tmp.sortBy { x -> x.first_name }
                 _allPlayers.value = tmp
+                HelperClass.AllowBack.value = true
             }
+            _filteredPlayers.value = _allPlayers.value
         }
     }
 
     fun getPlayersInTeam(teamId: Long?) {
         viewModelScope.launch {
-            HelperClass.AllowBack = false
+            HelperClass.AllowBack.value = false
             if (_allPlayers.value == null || _allPlayers.value?.count() == 0){
                 var currResponse = PlayerRepository.getPlayersPage(100, 1)
                 var tmp: ArrayList<Player> = arrayListOf()
@@ -91,7 +100,7 @@ class PlayerViewModel(application: Application): AndroidViewModel(application) {
 
             final.sortBy { x -> x.first_name }
             _playersInTeam.value = final
-            HelperClass.AllowBack = true
+            HelperClass.AllowBack.value = true
         }
     }
 }

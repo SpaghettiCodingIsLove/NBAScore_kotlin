@@ -1,14 +1,19 @@
 package com.example.nbascore.View
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.nbascore.Model.HelperClass
 import com.example.nbascore.R
 import com.example.nbascore.ViewModel.PlayerAdapter2
 import com.example.nbascore.ViewModel.PlayerViewModel
@@ -52,10 +57,10 @@ class FragmentPlayers : Fragment() {
 
         viewModel.getFullPlayerList()
 
-        myAdapter = PlayerAdapter2(viewModel.allPlayers)
+        myAdapter = PlayerAdapter2(viewModel.filteredPlayers)
         myLayoutManager = LinearLayoutManager(context)
 
-        viewModel.allPlayers.observe(
+        viewModel.filteredPlayers.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer {
                 myAdapter.notifyDataSetChanged()
@@ -73,6 +78,16 @@ class FragmentPlayers : Fragment() {
             this.adapter = myAdapter
         }
 
+        searchET.isEnabled = HelperClass.AllowBack.value!!
+        searchButton.isEnabled = HelperClass.AllowBack.value!!
+
+        HelperClass.AllowBack.observe(
+                viewLifecycleOwner,
+                androidx.lifecycle.Observer {
+                    searchET.isEnabled = HelperClass.AllowBack.value!!
+                    searchButton.isEnabled = HelperClass.AllowBack.value!!
+                })
+
         searchButton.setOnClickListener {
             var searchingPhrase: String = searchET.getText().toString()
 
@@ -81,7 +96,22 @@ class FragmentPlayers : Fragment() {
                 viewModel.getSearchedPlayers(searchingPhrase)
                 Toast.makeText(context, "Wyszukano frazę: $searchingPhrase", Toast.LENGTH_LONG).show()
             }
+
+            val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val currentFocusedView = requireActivity().currentFocus
+            currentFocusedView?.let {
+                inputMethodManager.hideSoftInputFromWindow(
+                        currentFocusedView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+            }
         }
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (HelperClass.AllowBack.value!!){
+                    view?.findNavController()?.popBackStack(R.id.fragmentPlayers, true)
+                }
+            }
+        })
     }
 
     companion object {

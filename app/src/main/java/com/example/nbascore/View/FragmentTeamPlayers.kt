@@ -82,7 +82,7 @@ class FragmentTeamPlayers : Fragment() {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (HelperClass.AllowBack){
+                if (HelperClass.AllowBack.value!!){
                     view?.findNavController()?.popBackStack(R.id.fragmentTeamPlayers, true)
                 }
             }

@@ -1,5 +1,6 @@
 package com.example.nbascore.Model
 
+import androidx.lifecycle.MutableLiveData
 import com.example.nbascore.Model.Entities.Team
 
 
@@ -10,6 +11,6 @@ class HelperClass {
         var Division: String = ""
         var PreviousConference: String = ""
         var PreviousDivision: String = ""
-        var AllowBack: Boolean = true
+        var AllowBack: MutableLiveData<Boolean> = MutableLiveData(true)
     }
 }
