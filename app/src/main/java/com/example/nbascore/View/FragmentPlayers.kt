@@ -49,14 +49,13 @@ class FragmentPlayers : Fragment() {
     ): View? {
 
         viewModel = ViewModelProvider(requireActivity()).get(PlayerViewModel::class.java)
-        viewModel.clear()
 
-        viewModel.getFullPlayerList2()
+        viewModel.getFullPlayerList()
 
-        myAdapter = PlayerAdapter2(viewModel.allPlayers2)
+        myAdapter = PlayerAdapter2(viewModel.allPlayers)
         myLayoutManager = LinearLayoutManager(context)
 
-        viewModel.allPlayers2.observe(
+        viewModel.allPlayers.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer {
                 myAdapter.notifyDataSetChanged()

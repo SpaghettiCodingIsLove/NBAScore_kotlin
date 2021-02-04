@@ -18,21 +18,12 @@ class PlayerViewModel(application: Application): AndroidViewModel(application) {
     get()= _allPlayers
     val PlayersInTeam: LiveData<ArrayList<Player>>
     get() = _playersInTeam
-    val allPlayers2: LiveData<ArrayList<Player>>
-        get()= _allPlayers2
 
 
     fun getAllPlayers()
     {
         viewModelScope.launch {
             _allPlayers.value = PlayerRepository.getAllPlayers()?.data
-        }
-    }
-
-    fun getAllPlayers2()
-    {
-        viewModelScope.launch {
-            _allPlayers2.value = PlayerRepository.getAllPlayers()?.data
         }
     }
 
@@ -65,27 +56,6 @@ class PlayerViewModel(application: Application): AndroidViewModel(application) {
 
                 tmp.sortBy { x -> x.first_name }
                 _allPlayers.value = tmp
-            }
-        }
-    }
-
-    fun getFullPlayerList2() {
-        viewModelScope.launch {
-            if (_allPlayers2.value == null || _allPlayers2.value?.count() == 0){
-                var currResponse = PlayerRepository.getPlayersPage(100, 1)
-                var tmp: ArrayList<Player> = arrayListOf()
-                if (currResponse != null) {
-                    tmp.addAll(currResponse.data)
-                }
-                while (currResponse?.meta?.next_page != null){
-                    currResponse = PlayerRepository.getPlayersPage(100, currResponse?.meta?.next_page!!)
-                    if (currResponse != null) {
-                        tmp.addAll(currResponse.data)
-                    }
-                }
-
-                tmp.sortBy { x -> x.first_name }
-                _allPlayers2.value = tmp
             }
         }
     }
