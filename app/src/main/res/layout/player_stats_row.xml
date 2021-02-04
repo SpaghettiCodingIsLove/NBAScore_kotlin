@@ -4,64 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayoutCompat"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10sp"
+    android:layout_marginRight="10sp">
 
     <TextView
         android:id="@+id/playerStatsName"
-        android:layout_width="100dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3.5"
+        android:layout_weight="0.45"
         android:textColor="@color/black"
-        android:textSize="16sp"
-        android:translationX="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="16sp" />
+
 
     <TextView
         android:id="@+id/playerPosition"
-        android:layout_width="45dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
+        android:layout_weight="0.1"
         android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@id/playerStatsName"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/playerGameTime"
-        android:layout_width="50dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
+        android:layout_weight="0.15"
         android:textColor="@color/black"
-        android:textSize="16sp"
-        android:translationX="-5dp"
-        app:layout_constraintStart_toEndOf="@+id/playerPosition"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/playerPoints"
-        android:layout_width="35dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
+        android:layout_weight="0.1"
         android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/playerGameTime"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/playerRebounds"
-        android:layout_width="35dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
+        android:layout_weight="0.1"
         android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/playerPoints"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/playerAssists"
-        android:layout_width="35dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_weight="1"
+        android:layout_weight="0.1"
         android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@id/playerRebounds"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="16sp"/>
 
 </LinearLayout>
