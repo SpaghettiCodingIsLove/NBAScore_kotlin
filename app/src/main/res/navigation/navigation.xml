@@ -60,6 +60,9 @@
         <action
             android:id="@+id/action_fragmentTeams_to_fragmentDivisions"
             app:destination="@id/fragmentDivisions" />
+        <action
+            android:id="@+id/action_fragmentTeams_to_fragmentTable"
+            app:destination="@id/fragmentTable" />
     </fragment>
     <fragment
         android:id="@+id/fragmentTable"
@@ -75,6 +78,9 @@
         <action
             android:id="@+id/action_fragmentTable_to_fragmentTeamPlayers"
             app:destination="@id/fragmentTeamPlayers" />
+        <action
+            android:id="@+id/action_fragmentTable_to_fragmentTeams"
+            app:destination="@id/fragmentTeams" />
     </fragment>
     <fragment
         android:id="@+id/fragmentConferences"

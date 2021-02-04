@@ -15,5 +15,6 @@ class HelperClass {
         var year: Int = -1
         var month: Int = -1
         var day: Int = -1
+        var allTeamsLoaded: Boolean = false
     }
 }

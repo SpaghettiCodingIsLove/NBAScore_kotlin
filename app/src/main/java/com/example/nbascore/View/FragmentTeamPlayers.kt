@@ -1,6 +1,7 @@
 package com.example.nbascore.View
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,10 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.nbascore.Model.Entities.FavoriteTeam
 import com.example.nbascore.Model.HelperClass
 import com.example.nbascore.R
 import com.example.nbascore.ViewModel.FavoriteTeamViewModel
@@ -71,9 +74,15 @@ class FragmentTeamPlayers : Fragment() {
         return inflater.inflate(R.layout.fragment_team_players, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("UseCompatLoadingForDrawables", "RestrictedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (favTeamsViewModel.isFavorite(HelperClass.CurrTeam!!.id)){
+            addToFavTeams.background.setTint(resources.getColor(R.color.red))
+            addToFavTeams.text = "Remove from favorites"
+        }
 
         recyclerView = teamPlayers.apply {
             this.layoutManager = myLayoutManager
@@ -91,7 +100,15 @@ class FragmentTeamPlayers : Fragment() {
         addToFavTeams.setOnClickListener {
             if (!favTeamsViewModel.isFavorite(HelperClass.CurrTeam!!.id)){
                 favTeamsViewModel.addTeam(HelperClass.CurrTeam?.id!!, HelperClass.CurrTeam?.abbreviation!!, HelperClass.CurrTeam?.city!!, HelperClass.CurrTeam?.conference!!, HelperClass.CurrTeam?.division!!, HelperClass.CurrTeam?.full_name!!, HelperClass.CurrTeam?.name!!)
-                Toast.makeText(context,"Dodałeś do ulubionych",Toast.LENGTH_SHORT).show()
+                addToFavTeams.background.setTint(resources.getColor(R.color.red))
+                addToFavTeams.text = "Remove from favorites"
+                Toast.makeText(context,"Added to favorites",Toast.LENGTH_SHORT).show()
+            }
+            else {
+                favTeamsViewModel.deleteTeam(favTeamsViewModel.getTeam(HelperClass.CurrTeam!!.id))
+                addToFavTeams.background.setTint(resources.getColor(R.color.blue))
+                addToFavTeams.text = "Add to favorites"
+                Toast.makeText(context,"Removed from favorites",Toast.LENGTH_SHORT).show()
             }
         }
 

@@ -55,6 +55,7 @@ class FragmentTable : Fragment() {
                 viewModel.clear()
                 viewModel.getInConference(HelperClass.Conference)
                 HelperClass.PreviousConference = HelperClass.Conference
+                HelperClass.allTeamsLoaded = false
             }
         }
         else if (HelperClass.Division != ""){
@@ -62,6 +63,14 @@ class FragmentTable : Fragment() {
                 viewModel.clear()
                 viewModel.getInDivision(HelperClass.Division)
                 HelperClass.PreviousDivision = HelperClass.Division
+                HelperClass.allTeamsLoaded = false
+            }
+        }
+        else {
+            if (!HelperClass.allTeamsLoaded){
+                viewModel.clear()
+                viewModel.getAllTeams()
+                HelperClass.allTeamsLoaded = true
             }
         }
 
@@ -83,7 +92,15 @@ class FragmentTable : Fragment() {
             this.adapter = myAdapter
         }
 
-        tableName.text = if (HelperClass.Division == "")  HelperClass.Conference else HelperClass.Division
+        if (HelperClass.Division != "") {
+            tableName.text = HelperClass.Division
+        }
+        else if (HelperClass.Conference != "") {
+            tableName.text = HelperClass.Conference
+        }
+        else {
+            tableName.text = "NBA teams"
+        }
     }
 
 

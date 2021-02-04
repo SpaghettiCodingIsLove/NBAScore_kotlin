@@ -32,5 +32,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/conferencesButton"
             android:backgroundTint="@color/red"/>
+
+        <Button
+            android:id="@+id/allTeamsButton"
+            android:layout_width="142dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="All teams"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divisionsButton" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

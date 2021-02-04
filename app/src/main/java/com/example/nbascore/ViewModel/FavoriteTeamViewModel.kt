@@ -38,4 +38,8 @@ class FavoriteTeamViewModel(application: Application): AndroidViewModel(applicat
         }
         return true
     }
+
+    fun getTeam(id: Long): FavoriteTeam{
+        return favoriteTeamRepository.getTeam(id)?.get(0)
+    }
 }
