@@ -12,5 +12,8 @@ class HelperClass {
         var PreviousConference: String = ""
         var PreviousDivision: String = ""
         var AllowBack: MutableLiveData<Boolean> = MutableLiveData(true)
+        var year: Int = -1
+        var month: Int = -1
+        var day: Int = -1
     }
 }

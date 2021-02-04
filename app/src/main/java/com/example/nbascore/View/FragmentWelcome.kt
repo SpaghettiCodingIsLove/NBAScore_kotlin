@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.example.nbascore.Model.HelperClass
 import com.example.nbascore.R
 import kotlinx.android.synthetic.main.fragment_welcome.*
 
@@ -42,6 +43,10 @@ class FragmentWelcome : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        HelperClass.month = -1
+        HelperClass.day = -1
+        HelperClass.year = -1
 
         goToPlayers.setOnClickListener {
             view -> view.findNavController().navigate(R.id.action_fragmentWelcome_to_fragmentPlayers)

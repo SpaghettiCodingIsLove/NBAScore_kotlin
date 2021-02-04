@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nbascore.Model.DataSource
 import com.example.nbascore.Model.Day
+import com.example.nbascore.Model.HelperClass
 import com.example.nbascore.R
 import com.example.nbascore.ViewModel.CalendarAdapter
 import com.example.nbascore.ViewModel.GameViewModel
@@ -50,9 +51,9 @@ class FragmentGames : Fragment() {
 
     var cal = Calendar.getInstance()
     private val currentDate = Calendar.getInstance()
-    private val currentDay = currentDate[Calendar.DAY_OF_MONTH]
-    private val currentMonth = currentDate[Calendar.MONTH]
-    private val currentYear = currentDate[Calendar.YEAR]
+    private var currentDay = currentDate[Calendar.DAY_OF_MONTH]
+    private var currentMonth = currentDate[Calendar.MONTH]
+    private var currentYear = currentDate[Calendar.YEAR]
     private val sdf = SimpleDateFormat("MMMM yyyy")
 
     private fun getDaysInMonth(): ArrayList<Day>{
@@ -97,6 +98,12 @@ class FragmentGames : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         viewModel = ViewModelProvider(requireActivity()).get(GameViewModel::class.java)
+
+        if (HelperClass.day != -1){
+            currentDay = HelperClass.day
+            currentMonth = HelperClass.month
+            currentYear = HelperClass.year
+        }
 
         DataSource.selectedDay = currentDay
         DataSource.selectedMonth = currentMonth
