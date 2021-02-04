@@ -17,10 +17,20 @@ class SeasonAveragesViewModel(application: Application): AndroidViewModel(applic
     val allSeasonAverages: LiveData<ArrayList<SeasonAverages>>
         get()= _allSeasonAverages
 
+    private var _playersSeasonAverages: MutableLiveData<ArrayList<SeasonAverages>> = MutableLiveData()
+    val playersSeasonAverages: LiveData<ArrayList<SeasonAverages>>
+        get()= _playersSeasonAverages
+
     fun getAllSeasonAverages()
     {
         viewModelScope.launch {
             _allSeasonAverages.value = SeasonAveragesRepository.getAllSeasonAverages()?.data
+        }
+    }
+
+    fun getPlayersSeasonAverages(playerId: Long, season: Int){
+        viewModelScope.launch {
+            _playersSeasonAverages.value = SeasonAveragesRepository.getPlayersSeasonAverages(playerId, season)?.data
         }
     }
 }

@@ -11,22 +11,22 @@ import com.example.nbascore.Model.DataSource
 import com.example.nbascore.Model.Entities.Player
 import com.example.nbascore.R
 
-class PlayerAdapter(private var playerList: LiveData<ArrayList<Player>>) : RecyclerView.Adapter<PlayerAdapter.PlayerHolder>() {
-    inner class PlayerHolder(view: View): RecyclerView.ViewHolder(view)
+class PlayerAdapter2(private var playerList: LiveData<ArrayList<Player>>) : RecyclerView.Adapter<PlayerAdapter2.PlayerHolder2>() {
+    inner class PlayerHolder2(view: View): RecyclerView.ViewHolder(view)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerHolder2 {
         val view= LayoutInflater.from(parent.context)
             .inflate(R.layout.player_team_row,parent,false)
-        return PlayerHolder(view)
+        return PlayerHolder2(view)
     }
 
-    override fun onBindViewHolder(holder: PlayerAdapter.PlayerHolder, position: Int) {
+    override fun onBindViewHolder(holder: PlayerAdapter2.PlayerHolder2, position: Int) {
         var playerName = holder.itemView.findViewById<TextView>(R.id.playerName)
         var currPlayer = playerList.value?.get(position)
         playerName.text = currPlayer?.first_name + " " + currPlayer?.last_name
 
         holder.itemView.setOnClickListener {
-            view -> view.findNavController().navigate(R.id.action_fragmentTeamPlayers_to_fragmentPlayerStats)
+                view -> view.findNavController().navigate(R.id.action_fragmentPlayers_to_fragmentPlayerStats)
             DataSource.selectedPlayer = currPlayer
         }
     }

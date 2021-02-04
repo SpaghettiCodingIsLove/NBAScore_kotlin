@@ -11,4 +11,7 @@ interface PlayerAPI {
 
     @GET("players/")
     fun getPlayersPage(@Query("per_page") perPage: Int, @Query("page") page: Int) : Call<PlayerData>
+
+    @GET("players/")
+    fun getSearchedPlayers(@Query("search") word: String, @Query("per_page") perPage: Int = 100) : Call<PlayerData>
 }

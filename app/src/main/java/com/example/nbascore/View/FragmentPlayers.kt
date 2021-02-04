@@ -5,11 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nbascore.R
-import com.example.nbascore.ViewModel.PlayerAdapter
+import com.example.nbascore.ViewModel.PlayerAdapter2
 import com.example.nbascore.ViewModel.PlayerViewModel
 import kotlinx.android.synthetic.main.fragment_players.*
 
@@ -30,7 +31,7 @@ class FragmentPlayers : Fragment() {
 
     private lateinit var viewModel: PlayerViewModel
 
-    private lateinit var myAdapter: PlayerAdapter
+    private lateinit var myAdapter: PlayerAdapter2
     private lateinit var myLayoutManager: LinearLayoutManager
     private lateinit var recyclerView: RecyclerView
 
@@ -50,12 +51,12 @@ class FragmentPlayers : Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(PlayerViewModel::class.java)
         viewModel.clear()
 
-        viewModel.getFullPlayerList()
+        viewModel.getFullPlayerList2()
 
-        myAdapter = PlayerAdapter(viewModel.allPlayers)
+        myAdapter = PlayerAdapter2(viewModel.allPlayers2)
         myLayoutManager = LinearLayoutManager(context)
 
-        viewModel.allPlayers.observe(
+        viewModel.allPlayers2.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer {
                 myAdapter.notifyDataSetChanged()
@@ -71,6 +72,16 @@ class FragmentPlayers : Fragment() {
         recyclerView = playersTable.apply {
             this.layoutManager = myLayoutManager
             this.adapter = myAdapter
+        }
+
+        searchButton.setOnClickListener {
+            var searchingPhrase: String = searchET.getText().toString()
+
+            if(!"".equals(searchingPhrase))
+            {
+                viewModel.getSearchedPlayers(searchingPhrase)
+                Toast.makeText(context, "Wyszukano frazę: $searchingPhrase", Toast.LENGTH_LONG).show()
+            }
         }
     }
 

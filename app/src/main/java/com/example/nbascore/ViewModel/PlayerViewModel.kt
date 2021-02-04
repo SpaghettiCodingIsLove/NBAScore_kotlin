@@ -12,16 +12,33 @@ import kotlinx.coroutines.launch
 
 class PlayerViewModel(application: Application): AndroidViewModel(application) {
     private var _allPlayers: MutableLiveData<ArrayList<Player>> = MutableLiveData()
+    private var _allPlayers2: MutableLiveData<ArrayList<Player>> = MutableLiveData()
     private var _playersInTeam: MutableLiveData<ArrayList<Player>> = MutableLiveData()
     val allPlayers: LiveData<ArrayList<Player>>
     get()= _allPlayers
     val PlayersInTeam: LiveData<ArrayList<Player>>
     get() = _playersInTeam
+    val allPlayers2: LiveData<ArrayList<Player>>
+        get()= _allPlayers2
+
 
     fun getAllPlayers()
     {
         viewModelScope.launch {
             _allPlayers.value = PlayerRepository.getAllPlayers()?.data
+        }
+    }
+
+    fun getAllPlayers2()
+    {
+        viewModelScope.launch {
+            _allPlayers2.value = PlayerRepository.getAllPlayers()?.data
+        }
+    }
+
+    fun getSearchedPlayers(word: String){
+        viewModelScope.launch {
+            _allPlayers2.value = PlayerRepository.getSearchedPlayers(word)?.data
         }
     }
 
@@ -48,6 +65,27 @@ class PlayerViewModel(application: Application): AndroidViewModel(application) {
 
                 tmp.sortBy { x -> x.first_name }
                 _allPlayers.value = tmp
+            }
+        }
+    }
+
+    fun getFullPlayerList2() {
+        viewModelScope.launch {
+            if (_allPlayers2.value == null || _allPlayers2.value?.count() == 0){
+                var currResponse = PlayerRepository.getPlayersPage(100, 1)
+                var tmp: ArrayList<Player> = arrayListOf()
+                if (currResponse != null) {
+                    tmp.addAll(currResponse.data)
+                }
+                while (currResponse?.meta?.next_page != null){
+                    currResponse = PlayerRepository.getPlayersPage(100, currResponse?.meta?.next_page!!)
+                    if (currResponse != null) {
+                        tmp.addAll(currResponse.data)
+                    }
+                }
+
+                tmp.sortBy { x -> x.first_name }
+                _allPlayers2.value = tmp
             }
         }
     }

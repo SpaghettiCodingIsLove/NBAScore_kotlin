@@ -9,5 +9,9 @@ class SeasonAveragesRepository {
         suspend fun getAllSeasonAverages(): SeasonAveragesData?{
             return Service.SeasonAveragesApi.getAllSeasonAverages().awaitResponse().body()
         }
+
+        suspend fun getPlayersSeasonAverages(playerId: Long, season: Int) : SeasonAveragesData?{
+            return Service.SeasonAveragesApi.getPlayersSeasonAverages(playerId, season).awaitResponse().body()
+        }
     }
 }
