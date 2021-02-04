@@ -3,12 +3,15 @@ package com.example.nbascore.View
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -57,13 +60,25 @@ class FragmentGameStats : Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(StatsViewModel::class.java)
 
         myLayoutManager = LinearLayoutManager(context)
-        myAdapter = StatsAdapter(viewModel.statsFromGame)
 
         viewModel.getStatsFromGame(DataSource.selectedGame?.id!!)
+        viewModel.getHomeStatsFromGame(DataSource.selectedGame?.id!!)
+        viewModel.getAwayStatsFromGame(DataSource.selectedGame?.id!!)
+
+        myAdapter = StatsAdapter(viewModel.statsFromGame, viewModel.homeStatsFromGame, viewModel.awayStatsFromGame)
 
         viewModel.statsFromGame.observe(viewLifecycleOwner, Observer {
             myAdapter.notifyDataSetChanged()
         })
+
+        viewModel.homeStatsFromGame.observe(viewLifecycleOwner, Observer {
+            myAdapter.notifyDataSetChanged()
+        })
+
+        viewModel.awayStatsFromGame.observe(viewLifecycleOwner, Observer {
+            myAdapter.notifyDataSetChanged()
+        })
+
         return inflater.inflate(R.layout.fragment_game_stats, container, false)
     }
 
@@ -81,6 +96,8 @@ class FragmentGameStats : Fragment() {
         var visitorTeamImage = view.findViewById<ImageView>(R.id.VisitorTeam)
         var constraintLayoutGames = view.findViewById<ConstraintLayout>(R.id.constraintLayoutOneGame)
         var breakTV = view.findViewById<TextView>(R.id.Break)
+        var home = view.findViewById<Button>(R.id.buttonHome)
+        var away = view.findViewById<Button>(R.id.buttonAway)
 
         var game = DataSource.selectedGame
 
@@ -157,12 +174,25 @@ class FragmentGameStats : Fragment() {
             breakTV.setBackgroundColor(redColor)
         }
 
+        home.setOnClickListener {
+
+            myAdapter.stats = myAdapter.homeStats
+            myAdapter.notifyDataSetChanged()
+
+            Toast.makeText(context,"Home Team Players",Toast.LENGTH_SHORT).show()
+        }
+
+        away.setOnClickListener {
+            myAdapter.stats = myAdapter.awayStats
+            myAdapter.notifyDataSetChanged()
+
+            Toast.makeText(context,"Away Team Players",Toast.LENGTH_SHORT).show()
+        }
+
         recyclerView = statsRecyclerView.apply {
             this.layoutManager = myLayoutManager
             this.adapter = myAdapter
         }
-
-
     }
 
     companion object {

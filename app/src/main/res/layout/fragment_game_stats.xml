@@ -136,12 +136,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/statsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayoutCompat"/>
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutCompat" />
 
     <Button
         android:id="@+id/buttonHome"
@@ -159,26 +159,23 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="56dp"
         android:layout_marginRight="56dp"
-        android:layout_marginBottom="35dp"
+        android:backgroundTint="@color/red"
         android:text="Away"
-        app:layout_constraintBottom_toTopOf="@+id/statsRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutOneGame"
-        app:layout_constraintVertical_bias="0.0"
-        android:backgroundTint="@color/red"/>
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutOneGame" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayoutCompat"
         android:layout_width="417dp"
         android:layout_height="25dp"
         android:background="#900001"
-        app:layout_constraintBottom_toTopOf="@+id/statsRecyclerView"
-        app:layout_constraintTop_toBottomOf="@+id/buttonHome"
-        tools:layout_editor_absoluteX="-5dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonHome">
 
         <TextView
             android:id="@+id/playerStatsName"
-            android:layout_width="150dp"
+            android:layout_width="145dp"
             android:layout_height="35dp"
             android:layout_marginStart="35dp"
             android:layout_marginLeft="35dp"
@@ -201,11 +198,11 @@
 
         <TextView
             android:id="@+id/playerPoints"
-            android:layout_width="40dp"
+            android:layout_width="25dp"
             android:layout_height="35dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:text="Pts"
+            android:text="P"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/playerGameTime"
@@ -213,19 +210,31 @@
 
         <TextView
             android:id="@+id/playerRebounds"
-            android:layout_width="40dp"
+            android:layout_width="25dp"
             android:layout_height="35dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:text="Reb"
+            android:text="R"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/playerPoints"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/playerRebounds2"
+            android:layout_width="25dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="A"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@id/playerRebounds"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/playerGameTime"
-            android:layout_width="40dp"
+            android:layout_width="45dp"
             android:layout_height="35dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
