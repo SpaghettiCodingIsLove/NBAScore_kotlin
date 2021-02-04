@@ -26,20 +26,20 @@
 
     <Button
         android:id="@+id/goToPlayers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="105dp"
+        android:layout_height="56dp"
         android:text="PLAYERS"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/goToClubs"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/napis"
-        app:layout_constraintVertical_bias="0.100000024" />
+        app:layout_constraintVertical_bias="0.2" />
 
     <Button
         android:id="@+id/goToClubs"
-        android:layout_width="99dp"
-        android:layout_height="wrap_content"
+        android:layout_width="105dp"
+        android:layout_height="56dp"
         android:backgroundTint="@color/red"
         android:text="CLUBS"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -47,35 +47,30 @@
         app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/napis"
-        app:layout_constraintVertical_bias="0.100000024" />
+        app:layout_constraintVertical_bias="0.2" />
 
     <Button
         android:id="@+id/goToGames"
-        android:layout_width="99dp"
-        android:layout_height="wrap_content"
+        android:layout_width="105dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
         android:text="Games"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="@id/goToFavTeams"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.435"
-        app:layout_constraintStart_toStartOf="@id/goToPlayers"
-        app:layout_constraintTop_toBottomOf="@+id/goToPlayers"
-        app:layout_constraintVertical_bias="0.100000024" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goToPlayers" />
 
     <Button
         android:id="@+id/goToFavTeams"
-        android:layout_width="99dp"
-        android:layout_height="wrap_content"
+        android:layout_width="105dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/red"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@id/goToClubs"
-        app:layout_constraintTop_toBottomOf="@+id/goToClubs"
-        app:layout_constraintVertical_bias="0.100000024"
         android:text="FAV TEAMS"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goToClubs" />
 
     <ImageView
         android:id="@+id/imageView"
