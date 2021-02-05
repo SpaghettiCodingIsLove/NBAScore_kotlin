@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nbascore.Model.DataSource
 import com.example.nbascore.Model.Day
+import com.example.nbascore.Model.HelperClass
 import com.example.nbascore.R
 import kotlinx.android.synthetic.main.custom_calendar_day.view.*
 import java.text.ParseException
@@ -85,6 +86,9 @@ class CalendarAdapter(var days: ArrayList<Day>, var viewModel: GameViewModel): R
             DataSource.selectedDay = days[position].day
             DataSource.selectedMonth = days[position].month
             DataSource.selectedYear = days[position].year
+            HelperClass.year = days[position].year
+            HelperClass.month = days[position].month
+            HelperClass.day = days[position].day
             dayOfWeek.setBackgroundColor(Color.parseColor("#17408b"))
             day.setBackgroundColor(Color.parseColor("#17408b"))
             viewModel.getGamesByDate(DataSource.createDate(), DataSource.createDate())

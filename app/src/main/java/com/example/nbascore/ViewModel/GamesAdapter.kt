@@ -42,8 +42,8 @@ class GamesAdapter(var games: LiveData<ArrayList<Game>>, private val context: Co
         var constraintLayoutGames = holder.itemView.findViewById<ConstraintLayout>(R.id.constraintLayoutOneRow)
         var breakTV = holder.itemView.findViewById<TextView>(R.id.Break)
 
-        homeTeam.text = games.value?.get(position)?.home_team?.abbreviation
-        visitorTeam.text = games.value?.get(position)?.visitor_team?.abbreviation
+        homeTeam.text = games.value?.get(position)?.home_team?.name?.toUpperCase()
+        visitorTeam.text = games.value?.get(position)?.visitor_team?.name?.toUpperCase()
         gameTime.text = games.value?.get(position)?.status
         homeTeamScore.text = games.value?.get(position)?.home_team_score.toString()
         visitorTeamScore.text = games.value?.get(position)?.visitor_team_score.toString()

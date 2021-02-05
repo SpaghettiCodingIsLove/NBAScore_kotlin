@@ -51,6 +51,9 @@ class StatsViewModel(application: Application): AndroidViewModel(application) {
                 if(DataSource.selectedGame?.home_team?.id == i.team.id)
                     list.add(i)
             }
+
+            list.sortByDescending { x -> x.pts }
+
             _homeStatsFromGame.value = list
         }
     }
@@ -63,6 +66,9 @@ class StatsViewModel(application: Application): AndroidViewModel(application) {
                 if(DataSource.selectedGame?.visitor_team?.id == i.team.id)
                     list.add(i)
             }
+
+            list.sortByDescending { x -> x.pts }
+
             _awayStatsFromGame.value = list
         }
     }
