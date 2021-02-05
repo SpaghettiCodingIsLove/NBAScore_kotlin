@@ -15,6 +15,10 @@ class HelperClass {
         var year: Int = -1
         var month: Int = -1
         var day: Int = -1
+<<<<<<< Updated upstream
         var allTeamsLoaded: Boolean = false
+=======
+        var home: Boolean = false;
+>>>>>>> Stashed changes
     }
 }

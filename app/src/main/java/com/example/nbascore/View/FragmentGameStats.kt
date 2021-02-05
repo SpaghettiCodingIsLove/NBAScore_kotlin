@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nbascore.Model.DataSource
+import com.example.nbascore.Model.HelperClass
 import com.example.nbascore.R
 import com.example.nbascore.ViewModel.StatsAdapter
 import com.example.nbascore.ViewModel.StatsViewModel
@@ -175,7 +176,7 @@ class FragmentGameStats : Fragment() {
         }
 
         home.setOnClickListener {
-
+            HelperClass.home = true
             myAdapter.stats = myAdapter.homeStats
             myAdapter.notifyDataSetChanged()
 
@@ -183,6 +184,7 @@ class FragmentGameStats : Fragment() {
         }
 
         away.setOnClickListener {
+            HelperClass.home = false
             myAdapter.stats = myAdapter.awayStats
             myAdapter.notifyDataSetChanged()
 

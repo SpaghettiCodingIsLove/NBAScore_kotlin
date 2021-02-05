@@ -98,7 +98,9 @@ class FragmentPlayerStats : Fragment(), AdapterView.OnItemSelectedListener {
         choosenPlayerName.text = DataSource.selectedPlayer?.first_name + " " + DataSource.selectedPlayer?.last_name
         choosenPlayerPosition.text = DataSource.selectedPlayer?.position
         if(DataSource.selectedPlayer?.height_feet != null && DataSource.selectedPlayer?.height_inches != null)
-            choosenPlayerHeight.text = DataSource.selectedPlayer?.height_feet.toString() + "'" + DataSource.selectedPlayer?.height_inches.toString() + "\'\'"
+            choosenPlayerHeight.text = DataSource.selectedPlayer?.heightCm.toString() + " cm"
+        if(DataSource.selectedPlayer?.weight_pounds != null)
+            choosenPlayerWeight.text = DataSource.selectedPlayer?.weightKg.toString() + "kg "
         choosenPlayerTeam.text = DataSource.selectedPlayer?.team?.name
     }
 

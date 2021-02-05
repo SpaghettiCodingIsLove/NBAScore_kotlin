@@ -41,12 +41,16 @@ class GamesAdapter(var games: LiveData<ArrayList<Game>>, private val context: Co
         var visitorTeamImage = holder.itemView.findViewById<ImageView>(R.id.VisitorTeam)
         var constraintLayoutGames = holder.itemView.findViewById<ConstraintLayout>(R.id.constraintLayoutOneRow)
         var breakTV = holder.itemView.findViewById<TextView>(R.id.Break)
+        var teamCity1 = holder.itemView.findViewById<TextView>(R.id.teamCity1)
+        var teamCity2 = holder.itemView.findViewById<TextView>(R.id.teamCity2)
 
         homeTeam.text = games.value?.get(position)?.home_team?.name?.toUpperCase()
         visitorTeam.text = games.value?.get(position)?.visitor_team?.name?.toUpperCase()
         gameTime.text = games.value?.get(position)?.status
         homeTeamScore.text = games.value?.get(position)?.home_team_score.toString()
         visitorTeamScore.text = games.value?.get(position)?.visitor_team_score.toString()
+        teamCity1.text = games.value?.get(position)?.home_team?.city?.toUpperCase()
+        teamCity2.text = games.value?.get(position)?.visitor_team?.city?.toUpperCase()
 
         homeTeamImage.setImageDrawable(context!!.resources.getDrawable( context.resources.getIdentifier(games.value?.get(position)?.home_team?.abbreviation?.toLowerCase(), "drawable", ContextUtils.getActivity(
                 context
